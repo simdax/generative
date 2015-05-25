@@ -32,10 +32,10 @@ a = PlazyEnvirN({ | basse=0, harmo=(Pseq([2, 4], inf)) |
 
 ( a <> (basse: (Pseq([3, 2, 6, 5, 2], inf)) )).trace.play
 // le signe <> est un opérateur de composition. On prend les valeurs à droite pour nourrir l'opérande de gauche.
-// Ici je mélange ma fonction a avec un environnement, dans lequel je ne précise qu'une seule valeur, les autres étant prises par défaut.
+// Ici je mélange ma fonction 'a' avec un environnement, dans lequel je ne précise qu'une seule valeur, les autres étant prises par défaut.
 
 
-//maintenant, au lieu d'utiliser un environnement
+//maintenant, au lieu d'utiliser un environnement, on peut intégrer ça dans un pbind !
 // cette chose-là peut se faire avec le 'type' phrase
 
 (
@@ -49,8 +49,7 @@ Pdef(\test,
 ).trace.play; // attention à où tu le mets le 'trace'. Si tu le mets sur le pbind au lieu du pdef, ça risque de faire des bugs plus tard...
 )
 
-// Ce module agit exactement comme une sorte d'improvisateur un peu naz qui joue 6 notes par rapport
-// à une basse donnée
+// Ce module agit exactement comme une sorte d'improvisateur un peu naz qui joue 6 notes au hasard par rapport à une basse donnée
 
 //On peut maintenant régler la basse
 
@@ -60,10 +59,11 @@ Pbindef(\test, \basse, 3b) // en passant tu vois une notation particulière pour
 
 (
 Pbindef(\test,
-	\basse, Pseq ([ (0!4), (5!4), (1!4), (4!4)].flat, inf),	 //la construction est remarquable. Si tu te souviens l'opérateur ! permet de créer un array avec la valeur répété. A la fin, pour pas me retrouver avec des arrays d'arrays, je lui dis flat et du coup j'ai cet array
+	\basse, Pseq ([ (0!4), (5!4), (1!4), (4!4)].flat, inf),
+	//la construction est remarquable. Si tu te souviens, l'opérateur '!' permet de créer un array avec la valeur répété. A la fin, pour pas me retrouver avec des arrays d'arrays, je lui dis flat et du coup j'ai cet array
 	// [ 0, 0, 0, 0, 5, 5, 5, 5, 1, 1, 1, 1, 4, 4, 4, 4 ]
-	\harmo, Prand([0,2,4], inf), // ici je lui dis de jouer que l'accord parfait
-)
+	\harmo, Prand([0,2,4], inf), // ici je lui dis de jouer que les notes de l'accord parfait
+).quant=1
 )
 
 // Pour faire sentir la basse on va rajouter une doublure avec un Pbind
@@ -72,28 +72,36 @@ Pbindef(\test,
 // il fournit en argument par défaut l'événement le plus récent du pattern choisit
 // Cela permet donc de copier des valeurs qui nous intéressent.
 
-~doublure=Pbind (\degree, Plazy( { Pcollect({ |ev| ev[\basse]}, Pdef(\test)) }) ) <> (octave: 3, amp: 1)
-~doublure.trace(\degree, prefix:"grosse basse").play(quant:1)
-~doublure.stop
+(
 
-// Et on fait un truc un peu feinteux pour faire un rythme un peu plus convaincant (enfin bon, c'est à l'arrache, il risque d'y avoir un certain nombre de notes bofs !) + certainement un certain décalage
-//il faudrait régler le truc avec des quantifications, ça je sais pas encore trop faire
+Pdef(\doublure,
+	Pbind (\degree, Plazy( { Pcollect({ |ev| ev[\basse]}, Pdef(\test)) }) )
+	<> (octave: 3, amp: 1)
+	// ici je te montre le concept de composition pour écrire un pbind de manière
+	// un peu différente qu'à l'habitude
+	// les valeurs dans l'environnement à droite sont ajoutés au pbind de gauche
+
+).trace(\degree, prefix:"grosse basse : ").play(quant:1)
+// ici tu vois qu'on peut juste débugger une seule valeur et rajouter un petit mot mignon
+)
+
+// Et on fait un truc un peu feinteux pour faire un rythme un peu plus convaincant
+// ici deux patterns nouveaux
+// Pconst tout d'abord permet de fournir des values qui vont summer ensemble jusqu'à une certaine valeur.
+// ça permet de découper des durées en parties inégales
+// => on peut le faire choisir au hasard avec des poids pour chaque partie,
+// Pwrand([0.25, 0.5, 1 ,2], [5,5,1,1].normalizeSum
+// mais moi j'aime bien ma technique de '!' + flatten
+
+// on a aussi Pstep, qui permet de répéter une valeur fourni par un pattern aussi longtemps qu'on le veut => ici je dis que chaque accord dure une ronde
 
 (
 Pbindef(\test,
-		 \dur, Prand([1, 0.5, 0.5, 2], inf),
-	// ici on choisit on remue une suite de valeur possible, alias
+	\dur, Pn (Pconst(4, Prand([0.25 !5, 0.5!5, 1, 2].flat, inf), 0.5)),
+	\basse, Pstep(Pseq([0,5,3,4]), 4, inf)
+
 ).quant=1
 )
 
 
-// Et voilà, on vient de recoder improvisator en 50 lignes :)
-
-(
-Pdefn( \auClairLuneN, Pseq([0,0,0,1,2,1,0,2,1,1,0]);
-Pdefn( \auClairLuneR, Pseq([1,1,1,1,2,2,1,1,1,1,4]);
-
-	)
-
-		Pdef(\a).play
-
+// Et voilà, on vient de recoder improvisator en 10 lignes :)
