@@ -105,3 +105,9 @@ Pbindef(\test,
 
 
 // Et voilà, on vient de recoder improvisator en 10 lignes :)
+
+// il faut pas mal s'entraîner parce que ça peut devenir vite complexe
+// dans l'ordre on a :
+// des patterns de données brutes
+// des patterns qui sont des données brutes avec un rythme et des clefs à modifier
+// des patterns qui contrôlent d'autres patterns en leur fournissant des données selon un certain rythme
