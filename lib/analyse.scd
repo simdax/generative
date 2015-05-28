@@ -34,12 +34,6 @@
 	);
 	temp.reshapeLike(mels);
 };
-~plusPetitsInter={arg mel;
-
-			[mel[0]]++(
-		~convertirMel.(mel.differentiate.drop(1)).integrate
-	)
-	};
 
 ~melodieLaMoinsBougeante={ |mels|
 mels.at(mels.collect({ |i|
