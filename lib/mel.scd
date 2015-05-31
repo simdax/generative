@@ -1,4 +1,9 @@
 (
+
+////// génère une mel "à peu près" logique, pas trop de sensible
+/// TODO, enlever des écarts nuls style 'fa-si'
+
+
 ~genererMel={ |nbNotes =((6..10).choose)|
 	var mel=~verifierRepetitions.(
 	Array.fill(nbNotes, { [0,1,2,3,4,5,6]
@@ -7,6 +12,12 @@
 	("mel généré = " ++mel).postln;
 	mel
 };
+
+
+/////
+///// ensemble de fonctions pour générer à partir d'un thème
+///// les transformations contrapuntiques qui peuvent s'harmoniser
+///// avec l'original
 
 ~ttesPossibilites={ |x|
 	x.size.collect(x.rotate(_))
@@ -45,6 +56,9 @@
 	}).deepCollect(2, _.reject(_.isNil));
 
 };
+
+
+/// timbre ??
 ~melange={ |array, nbVoix=2|
 	array.powerset
 	.select(_.includes(array.first))
@@ -57,30 +71,31 @@
 };
 )
 
-//
-// (
-// b=Array.new;
-// while(
-// 	{b.size<(7..10).choose},
-// 	{a=[0]++Array.fill((8..10).choose, {(0..5).choose});
-// 		b=~analyse.(a)
-// 		.flatten
-// 		.reject({ |i| i.size==0})
-// 		.unbubble(1)
-// 		// .reshape.valueArray(b.shape)
-// 	;}
-// );
-// c=~melange.(b.collect({ |i, index|
-// 	Pbind(
-// 		\type, \midi,
-// 		\midiout, m,
-// 		\degree, Pseq(i),
-// 		\octave, rrand(4,5),
-// 		/*\dur, Pseq(
-// 		Array.fill(5, {(1.0.rand).round(0.2)}), inf
-// 		)*/
-// 	)
-// }), 2).collect(Ppar(_)).postln;
-//
-// Pseq(c, inf).trace.play
-// )
+
+
+(
+b=Array.new;
+while(
+	{b.size<(7..10).choose},
+	{a=[0]++Array.fill((8..10).choose, {(0..5).choose});
+		b=~analyse.(a)
+		.flatten
+		.reject({ |i| i.size==0})
+		.unbubble(1)
+	;}
+);
+c=~melange.(b.collect({ |i, index|
+	Pbind(
+		\type, \midi,
+		\midiout, m,
+		\degree, Pseq(i),
+		\octave, rrand(4,5),
+		/*\dur, Pseq(
+		Array.fill(5, {(1.0.rand).round(0.2)}), inf
+		)*/
+	)
+}), 2).collect(Ppar(_)).postln;
+
+Pseq(c, inf).trace.play
+)
+

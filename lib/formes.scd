@@ -13,7 +13,6 @@
 		])
 	]).play;
 };
-
 ~melEtAcc={ |mel|
 
 	var voixPrincipale= ~genPbind.(mel);
@@ -35,8 +34,11 @@
 	)
 
 };
-
-
-~melEtAcc.value(~genererMel.(5))
 )
 
+(
+mel=~genererMelodie;
+Pdefn(\mel, Pseq(mel));
+~morceauBasique.(Pdefn(\mel), )
+
+)

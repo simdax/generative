@@ -22,6 +22,8 @@
 
 // ~trouverPattern.([3,3,3,3,3])
 
+
+
 ~reduireHarmo = { |n, modulo=7|
 	var note=n%7;
 	(note < (modulo/2)).if ({note}, { note - modulo });
@@ -49,7 +51,6 @@ mels.at(mels.collect({ |i|
 		{
 			m.removeAt(m.find(ar)+ar.size-1)
 	 };
-
 	(m.addFirst(mel.first)).integrate;
 	};
 
@@ -63,7 +64,7 @@ mels.at(mels.collect({ |i|
 	});
 };
 
-~detecterDuplicates={ |array|
+~detectDuplicates={ |array|
 	var result=List.new;
 array.doAdjacentPairs({ |a, b|
 		if (
@@ -80,7 +81,7 @@ array.doAdjacentPairs({ |a, b|
 		y.indicesOfEqual(false)+1
 	)
 };
-~detectOccurences={ |array|
+~detectNbOccurences={ |array|
 	var y=~detecterDuplicates.(array);
 	var debut=List[1];
 	y.collect({ |x|
@@ -90,6 +91,7 @@ array.doAdjacentPairs({ |a, b|
 		)
 	});
 	debut
-}
+};
+
 )
 

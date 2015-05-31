@@ -1,4 +1,11 @@
 (
+// permet de définir une grille par rapport à une basse harmo
+// de base, definit juste trois accords majeurs, do fa sol
+// TODO : faire en sorte que la structure se répètent aussi
+// pour s'accorder avec les basses, et pouvoir créer des grilles
+// de style jazzy
+
+//(type est pour définir des structures de clusters ou quartes
 
 ~structureHarmonique ={ | accords=#[0,3,-3], structure=3, type=2 |
 	accords.collect(
@@ -68,7 +75,7 @@
 	resultat.collect(_.as(Array))
 	.collect(_+.t [0,2,4,6]);
 };
-~analyseHarmonique={ |mel,structAccords|
+~analyseHarmonique={ |mel,structAccords=(~structureHarmonique.())|
 	var result=
 	~convertirMel.(mel)
 	.collect({ |i|
