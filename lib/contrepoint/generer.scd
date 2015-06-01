@@ -1,9 +1,11 @@
 
-
 /////
 ///// ensemble de fonctions pour générer à partir d'un thème
 ///// les transformations contrapuntiques qui peuvent s'harmoniser
 ///// avec l'original
+
+// avec changements rythmiques et de hauteur
+/// TODO intégrer les changements de hauteurs
 
 ~analyserIntervalles={ |mel ... hypotheses|
 	~ttesPossibilites.(mel).collect({ |x|
@@ -12,6 +14,13 @@
 		)
 	})
 };
+// ~analyserIntervalles.( [0,1,2,5], [1,5,7,4])
+
+/// pseudo fonction
+// TODO : la transformer en quelque chose de propre qui analyse le rapport entre une
+// mel et un ensemble de fonction qui la transforme, de la forme
+// analyse. ( mel,  'neg', { |x| x+4} ) etc.
+/// avec visualisation du résultat
 
 ~laTotale={ |mel|
 	~convertirMel.(
@@ -50,3 +59,5 @@
 	}).deepCollect(2, _.reject(_.isNil));
 
 };
+
+// check l'exemple dans les exemples

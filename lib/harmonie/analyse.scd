@@ -1,5 +1,6 @@
 (
 
+//// fonctions pour transformer une mélodie en ensemble de note sans souci d'intervalles
 
 ~reduireHarmo = { |n, modulo=7|
 	var note=n%7;
@@ -15,6 +16,8 @@
 };
 
 
+/////
+///// montre en console une petite matrice avec les possibilités harmoniques
 
 ~visualiserAnalyse= { |analyse, r=((0..6)) |
 	var roots=~sortSolfege.(r);

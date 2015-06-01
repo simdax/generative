@@ -1,4 +1,13 @@
-Dans ce module, on trouve deux fichiers
+SHAPE
+=====
+
+S'occupe de mélodies seules
+
+Dans ce module, on trouve trois fichiers
 
 1) permet la génération d'enveloppes auditives "crédibles"
-2) filtre ces enveloppes pour détecter des choses remarquables
+	* genererMel
+	* genererMelDepuisEnv
+
+2) compare et modifie des enveloppes pour les adapter à des contraintes
+	* verifierRepetitions
