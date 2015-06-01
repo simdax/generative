@@ -1,11 +1,12 @@
 
 (
 
-var listeFichiers=["analyse", "polyphonie", "mel", "grilleHarmonique", "midiConnect",  "lisibilite", "vecteur", "rythme", "formes", "niou"];
+var listeFichiers=["math", "shape", "contrepoint", "harmonie", "rythme", "forme", "timbre"];
 var root="/home/simdax/Musique/generative/lib/";
 var paths=listeFichiers.collect({ |i|
-	root++i++".scd"
+	root++i++"/main.scd"
 });
+
 paths.collect(
 this.executeFile(_);
 );

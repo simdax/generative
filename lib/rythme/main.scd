@@ -1,5 +1,5 @@
 (
-~mel={ |dessinMel|
+~pasRepetitions={ |dessinMel|
 
 	var hauteur=~removeDuplicates.(dessinMel);
 	var dur=~detectOccurences.(dessinMel);
@@ -8,17 +8,14 @@
 
 ~genPbind={ |mel|
 
-	mel=~mel.(mel);
+	mel=~pasRepetitions.(mel);
 	("voix et rythme = "++mel).postln;
 
 	Pbind(
 		\type, 'midi',
 		'midiout', m,
 		\degree, Pseq(mel[0]),
-		\dur, Pseq(mel[1]),
-		\chan, 3,
-		\amp, 0.9,
-		'legato', 1)/*.trace*/;
+		\dur, Pseq(mel[1])
 };
 
 )

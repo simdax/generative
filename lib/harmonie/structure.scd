@@ -1,4 +1,13 @@
-(
+//// pour classer les consonnances ??
+
+~sortSolfege={ |mel, ordreGrandeur=#[0,1, 2, 3, -3, -2, -1]|
+	~convertirMel.(mel).sort({ |a, b|
+		ordreGrandeur.indexOf(a)
+		< 		ordreGrandeur.indexOf(b)
+	})
+};
+
+
 // permet de définir une grille par rapport à une basse harmo
 // de base, definit juste trois accords majeurs, do fa sol
 // TODO : faire en sorte que la structure se répètent aussi
@@ -43,6 +52,9 @@
 	resultat.collect(_.as(Array))
 	.collect(_+.t [0,2,4]);
 };
+
+//FIX !!
+
 ~quatreAccords={ |ml=((..12)), modulo=((-6..6))|
 	var mil, accords, resultat;
 	 mil=(ml);
@@ -89,20 +101,3 @@
 	result
 
 };
-~trouverGrille={ |analyse|
-	var m=analyse.allTuples;
-
-	m=m.at ({
-		var a=m.collect(~trouverPattern.(_));
-		var index=a.collect(_.size).maxIndex;
-		("on a ces "++a[index].size++" patterns : "++a[index]).postln;
-		index
-	}.value);
-
-	m+.t [0,2,4];
-};
-
-
-)
-
-

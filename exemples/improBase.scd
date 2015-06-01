@@ -35,7 +35,8 @@ Pdef(\acc,
 (
 Pdef(\morceau,
 Psym(
-		[\theme,
+		[
+			\theme,
 			\acc
 		]
 ))
