@@ -1,3 +1,4 @@
+//FILTRES
 (
 ~pasRepetitions={ |dessinMel|
 
@@ -6,18 +7,27 @@
 	[hauteur, dur]
 };
 
-~genPbind={ |mel|
+// contrainte à une certaine durée
 
-	mel=~pasRepetitions.(mel);
-	("voix et rythme = "++mel).postln;
+~dureeGlobale= { |durees, dur|
+	durees.normalizeSum * dur
+};
 
-	Pbind(
-		\type, 'midi',
-		'midiout', m,
-		\degree, Pseq(mel[0]),
-		\dur, Pseq(mel[1])
+
+// GENERATEURS
+// On rentre une mel il en ressort du rythme
+///// créé du rythme par rapports aux intervalles
+///// (en fait par rapport à l'accentuation mélodique...)
+
+
+//version linéaire
+// gros intervalles = grosses durées
+~rythmeIntervalliques={ | mel, ecarts=#[0.5, 2], type='linlin' |
+	var intervalles=mel.differentiate.abs;
+	intervalles=intervalles.perform(type, intervalles.minItem, intervalles.maxItem, ecarts.minItem, ecarts.maxItem);
+	("rythme généré = "++intervalles).postln;
+	intervalles
 };
 
 )
-
 

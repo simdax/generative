@@ -1,15 +1,19 @@
 
 /// variables basiques du morceau
 (
+~variables={
 ~mel=~genererMel.();
 Pdefn(\mel, Pseq(~mel));
-)
-(
-var accords=~analyseHarmonique.(~mel, ~troisAccords.().choose);
-Pdefn(\accords, Pseq ( accords))
+
+~basses=~analyseHarmonique.(~mel, ~troisAccords.().choose);
+~basses=~trouverGrille.(~basses);
+Pdefn(\basses, [0,2,4] + Pseq ( ~basses) );
+Pdefn(\natureAccords, Pn([0,2,4]))
+
+}
 )
 
-//// variables "d'interprétation"
+//// variables "d'interprétation" et "voix"
 (
 Pdef(\theme,
 	Pbind(
@@ -24,23 +28,26 @@ Pdef(\acc,
 	Pbind(
 		\type, \midi,
 		\midiout, m,
-		\degree, Pdefn(\accords),
+		\degree, Pdefn(\basses),
 		\chan, 1,
 		\amp, 0.7
-	)
+	).trace
 )
 )
 
 //// "forme" du morceau
 (
-Pdef(\morceau,
+Plazy({
+	~variables.value();
+
+Pn(
 Psym(
 		[
 			\theme,
 			\acc
 		]
-))
-	.play(quant:1)
+	), 4)
+})	.play(quant:1)
 
 )
 
