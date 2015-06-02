@@ -16,8 +16,22 @@
 	(m.addFirst(mel.first)).integrate;
 	};
 
+// ~intervallesMax.([0,3,5,8,-7,10,1,2]) => [ 0, 3, 5, 8, 7, 10, 8, 9 ]
 
+~intervalleMax={ |mel, intervalleMax=5|
 
+	var result=mel.differentiate;
+	result.collect({ |x|
+
+		if (
+			(x.abs > intervalleMax),
+		{~reduireHarmo.(x)},
+			{x})
+	})
+	.integrate
+
+};
 
 
 )
+

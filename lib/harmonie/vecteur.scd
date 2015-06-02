@@ -11,10 +11,13 @@
 	m=m.at ({
 		var a=m.collect(~trouverPattern.(_));
 		var index=a.collect(_.size).maxIndex;
-		("on a ces "++a[index].size++" patterns : "++a[index]).postln;
+		// ("on a ces "++a[index].size++" patterns : "++a[index]).postln;
 		index
 	}.value);
 
+		 ("grille générée : "++m).postln;
+
+	m
 
 };
 

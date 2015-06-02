@@ -14,6 +14,7 @@ this.executeFile(_);
 
 )
 //ACTIVER LE MIDI
+// par defaut, il détecte "fluid synth"
 (
 
  ~startMIDI.();

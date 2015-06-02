@@ -87,6 +87,7 @@
 	resultat.collect(_.as(Array))
 	.collect(_+.t [0,2,4,6]);
 };
+
 ~analyseHarmonique={ |mel,structAccords=(~structureHarmonique.())|
 	var result=
 	~convertirMel.(mel)

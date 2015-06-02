@@ -105,6 +105,8 @@ array.doAdjacentPairs({ |a, b|
 	)
 };
 
+// TODO : pour plusieurs melodies
+
 ~enNotes= { |mels|
 	~convertirMel.(mels)
 	// .flatten(mels.rank)
