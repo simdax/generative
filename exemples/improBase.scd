@@ -2,18 +2,19 @@
 /// variables basiques du morceau
 (
 ~variables={
-~mel=~genererMel.();
-Pdefn(\mel, Pseq(~mel));
+	~mel=~genererMel.();
+	Pdefn(\mel, Pseq(~mel));
 
-~basses=~analyseHarmonique.(~mel, ~troisAccords.().choose);
-~basses=~trouverGrille.(~basses);
-Pdefn(\basses, [0,2,4] + Pseq ( ~basses) );
-Pdefn(\natureAccords, Pn([0,2,4]))
+	~basses=~analyseHarmonique.(~mel, ~troisAccords.().choose);
+	~basses=~trouverGrille.(~basses);
+	Pdefn(\basses, [0,2,4] + Pseq ( (~pasRepetitions.(~basses))[0] ));
+	Pdefn(\rBasses, Pseq((~pasRepetitions.(~basses))[1]));
+	Pdefn(\natureAccords, Pn([0,2,4]));
 
-}
-)
+};
 
-//// variables "d'interprétation" et "voix"
+
+//// +variables "d'interprétation" et "voix"
 (
 Pdef(\theme,
 	Pbind(
@@ -34,20 +35,22 @@ Pdef(\acc,
 	).trace
 )
 )
-
+)
 //// "forme" du morceau
 (
 Plazy({
 	~variables.value();
 
-Pn(
-Psym(
-		[
-			\theme,
-			\acc
-		]
+	Pn(
+		Psym(
+			[
+				\theme,
+				\acc
+			]
 	), 4)
 })	.play(quant:1)
 
 )
+
+
 

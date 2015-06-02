@@ -1,19 +1,5 @@
-//FILTRES
+
 (
-~pasRepetitions={ |dessinMel|
-
-	var hauteur=~removeDuplicates.(dessinMel);
-	var dur=~detectOccurences.(dessinMel);
-	[hauteur, dur]
-};
-
-// contrainte à une certaine durée
-
-~dureeGlobale= { |durees, dur|
-	durees.normalizeSum * dur
-};
-
-
 // GENERATEURS
 // On rentre une mel il en ressort du rythme
 ///// créé du rythme par rapports aux intervalles
@@ -26,8 +12,41 @@
 	var intervalles=mel.differentiate.abs;
 	intervalles=intervalles.perform(type, intervalles.minItem, intervalles.maxItem, ecarts.minItem, ecarts.maxItem);
 	("rythme généré = "++intervalles).postln;
-	intervalles
+	~dureeGlobaleintervalles
+};
+// Fonction générant une mélodie simple sans répétitions
+// renvoie un array avec la mélodie et son rythme
+
+~pasRepetitions={ |dessinMel|
+
+	var hauteur=~removeDuplicates.(dessinMel);
+	var dur=~detectNbOccurences.(dessinMel);
+	[hauteur, dur]
 };
 
-)
+
+//FILTRES
+
+
+// fonction plus évoluée permettant de slurer n'importe quel rythme de
+// n'importe quelle mélodie
+
+~ties={ |mel, dur|
+
+	var indices=(~detectDuplicates.(mel).indicesOfEqual(true))+1;
+	indices.do({ |i|
+		dur[i]=dur[i].neg
+	});
+	dur
+};
+
+
+// contrainte une mélodie à une certaine durée
+
+~dureeGlobale= { |durees, dur|
+	durees.normalizeSum * dur
+};
+
+
+
 

@@ -1,3 +1,4 @@
+//ACTIVER LA LIB
 
 (
 
@@ -12,6 +13,7 @@ this.executeFile(_);
 );
 
 )
+//ACTIVER LE MIDI
 (
 
  ~startMIDI.();

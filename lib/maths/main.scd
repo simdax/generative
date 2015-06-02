@@ -70,13 +70,13 @@ array.doAdjacentPairs({ |a, b|
 	result;
 };
 ~removeDuplicates={ |array|
-	var y=~detecterDuplicates.(array);
+	var y=~detectDuplicates.(array);
 	[array[0]]++array.at(
 		y.indicesOfEqual(false)+1
 	)
 };
 ~detectNbOccurences={ |array|
-	var y=~detecterDuplicates.(array);
+	var y= ~detectDuplicates.(array);
 	var debut=List[1];
 	y.collect({ |x|
 		switch (x,
@@ -84,8 +84,9 @@ array.doAdjacentPairs({ |a, b|
 			false, {debut.add(1)}
 		)
 	});
-	debut
+	debut.asArray.flatten
 };
+
 
 ///////////////////////////
 ///////////////
