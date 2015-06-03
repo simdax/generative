@@ -1,5 +1,16 @@
 
 (
+
+///////////// HELPERS //////////////////////
+
+~melBienFormee={
+
+
+
+};
+
+
+
 ~morceauBasique={ |mel, accords|
 
 	Pdef('mel', mel);
@@ -35,10 +46,10 @@
 
 };
 )
-
-(
-mel=~genererMelodie;
-Pdefn(\mel, Pseq(mel));
-~morceauBasique.(Pdefn(\mel), )
-
-)
+//
+// (
+// mel=~genererMelodie;
+// Pdefn(\mel, Pseq(mel));
+// ~morceauBasique.(Pdefn(\mel), )
+//
+// )

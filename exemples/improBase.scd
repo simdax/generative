@@ -2,19 +2,17 @@
 /// variables basiques du morceau
 (
 ~variables={
-	~mel=~genererMel.();
+	~mel=~genererMel.((10..15).choose);
 	~melD=~rythmeIntervallique.(~mel);
 	~mel=~intervalleMax.(~mel);
-	Pdefn(\melH, Pseq(~mel));
-	Pdefn(\melD, Pseq(~melD));
+
 
 	~basses=~analyseHarmonique.(~mel, ~troisAccords.().choose);
 	~basses=~trouverGrille.(~basses);
-	~bassesR=~schemaR.(~melD, ~pasRepetitions.(~basses)[1]).postln;
+    ~basses=~pasRepetitions.(~basses);
 
-	Pdefn(\basses, [0,2,4] + Pseq (~basses));
-	Pdefn(\rBasses, Pseq((~bassesR)));
-
+	~bassesH=~basses[0];
+	~bassesR=~schemaR.(~melD, ~basses[1]);
 };
 
 
@@ -48,6 +46,8 @@ Pdef(\acc,
 //// "forme" du morceau
 
 (
+
+
 Pdef(\morceau,
 Pn(
 	Plazy({
@@ -60,13 +60,18 @@ Pn(
 
 		".postln;
 	~variables.value();
-	Psym(
+	Pdefn(\melH, Pseq(~mel));
+	Pdefn(\melD, Pseq(~melD));
+	Pdefn(\basses, [0,2,4] + Pseq (~bassesH));
+	Pdefn(\rBasses, Pseq((~bassesR)));
+
+			Psym(
 			Prand([
-				Pseq([\theme,[\theme,\acc]]),
-				Pseq([\theme,\acc]),
-				Pseq([\acc])
+					// Pseq([\theme,[\theme,\acc]]),
+					Pseq([[\theme,\acc]]),
+					// Pseq([\acc])
 			])
-			) <> (scale: [ Scale.minor, Scale.major].choose)
+			) <> (scale: Pseq([ Scale.major, Scale.lydian, Scale.mixolydian], inf).iter.next)
 })
 )).play(quant:1)
 
