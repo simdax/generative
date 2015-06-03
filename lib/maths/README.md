@@ -16,3 +16,11 @@ Simple bibliothèque pour créer des fonctions d'aide à des transformations mat
 ** detectDuplicates
 ** removeDuplicates
 ** detectNbOccurences
+
+* ITERATION
+** selectIndex
+** selectSize
+
+* LISIBILITE
+** convertirNotes
+** enNotes TODO !

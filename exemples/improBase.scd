@@ -67,9 +67,9 @@ Pn(
 
 			Psym(
 			Prand([
-					// Pseq([\theme,[\theme,\acc]]),
+
 					Pseq([[\theme,\acc]]),
-					// Pseq([\acc])
+
 			])
 			) <> (scale: Pseq([ Scale.major, Scale.lydian, Scale.mixolydian], inf).iter.next)
 })

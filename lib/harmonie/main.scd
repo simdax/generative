@@ -1,5 +1,5 @@
 (
-var paths=["array.scd", "calcul.scd", "analyse.scd", "lisibilite.scd"];
+var paths=["vecteur.scd", "structure.scd", "polyphonie.scd", "analyse.scd"];
 paths=paths.collect(
 	_.resolveRelative
 );
@@ -8,3 +8,4 @@ paths.collect(
 );
 
 )
+

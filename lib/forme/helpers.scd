@@ -5,25 +5,48 @@
 
 ~melBienFormee={
 
-
+	var hauteurs=~genererMel.();
+	var durees= ~rythmeIntervallique.(hauteurs);
+	[hauteurs, durees]
 
 };
 
+~genMel={ |mel|
 
-
-~morceauBasique={ |mel, accords|
-
-	Pdef('mel', mel);
-	Pdef('accords', accords);
-
-	Pseq([
-		Pdef('mel').trace(prefix:"mel"),
-		Ppar([
-			Pdef('mel'),
-			Pdef('accords').trace(prefix:"accom")
-		])
-	]).play;
+	Pdef(\mel,
+		Pbind(
+			\degree, Pseq(mel[0]),
+			\dur, Pseq(mel[1]),
+			\amp, 1,
+			// \legato, 0.8
+	))
 };
+
+
+~genContinuo={ |acc|
+
+	Pdef(\accords,
+		Pbind(
+			\degree, [0,2,4] + Pseq(acc[0]),
+			\dur, Pseq(acc[1]),
+			\amp, 0.7,
+			\legato, 1
+	))
+};
+
+~morceauBasique={
+
+	Pdef( \morceau,
+	Psym(
+			Pseq([
+		[
+			'mel',
+			'accords'
+		]
+	]);
+	))
+};
+
 ~melEtAcc={ |mel|
 
 	var voixPrincipale= ~genPbind.(mel);

@@ -11,4 +11,4 @@ Dans ce module, on trouve trois fichiers
 
 2) compare et modifie des enveloppes pour les adapter à des contraintes
 	* verifierRepetitions
-	* intervalleMax
+	* intervalleMax TODO :: faire avec intervalles plutôt qu'avec notes

@@ -1,5 +1,5 @@
 (
-var paths=["array.scd", "calcul.scd", "analyse.scd", "lisibilite.scd"];
+var paths=["helpers.scd", "aleatoire.scd"];
 paths=paths.collect(
 	_.resolveRelative
 );
@@ -8,3 +8,4 @@ paths.collect(
 );
 
 )
+
