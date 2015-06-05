@@ -3,7 +3,7 @@
 (
 
 var listeFichiers=["maths", "shape", "contrepoint", "harmonie", "rythme", "forme", "timbre"];
-var root="/home/simdax/Musique/generative/lib/";
+var root="./".resolveRelative;
 var paths=listeFichiers.collect({ |i|
 	root++i++"/main.scd"
 });
@@ -18,11 +18,18 @@ this.executeFile(_);
 (
 
  ~startMIDI.();
- m.connect(~detect.());
+ m.connect(~detectMIDIDevice.());
 
 )
 
+// pour MAC, apparement ça fonctionne
 
+(
 
+MIDIClient.init;
+m=MIDIOut(0);
 
+//test
+m.noteOn(0, 60, 60)
+)
 

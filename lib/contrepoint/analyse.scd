@@ -16,6 +16,14 @@ var b= a++[1];
 (melUn.absdif(melDeux).sum) <= tolerance
 };
 
+
+// calcule vite fait la direction mélodique
+
+~direction={ |mel|
+	mel.reject(_=='rest').sum;
+};
+
+
 // checke la mélodie avec en moyenne le moins de sauts
 
 // TODO : réfléchir sur quelque chose au niveau d'une pondération des types d'intervalles

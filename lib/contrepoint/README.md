@@ -6,6 +6,7 @@ Module découpé en trois modules
 
 1. Analyse
 	* comparer
+	* direction
 	* melodieLaMoinsBougeante
 	* notesEnCommun
 	* FIX pasDeNotesEnCommun

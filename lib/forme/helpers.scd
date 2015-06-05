@@ -34,40 +34,6 @@
 	))
 };
 
-~morceauBasique={
-
-	Pdef( \morceau,
-	Psym(
-			Pseq([
-		[
-			'mel',
-			'accords'
-		]
-	]);
-	))
-};
-
-~melEtAcc={ |mel|
-
-	var voixPrincipale= ~genPbind.(mel);
-	var voixSecondaires=
-	{
-		var basses=~analyseHarmonique.(
-			mel,
-			(~troisAccords.().choose)
-		);
-		(Pbind('chan', 2, 'amp', 0.75) <>
-		~genPbind.(
-			~filtrerVecteur.(basses.allTuples).postln
-			 +.t [0,2,4]
-	))
-	};
-
-	 ~morceauBasique.(
-		voixPrincipale, voixSecondaires.value
-	)
-
-};
 )
 //
 // (

@@ -42,6 +42,18 @@ Pbind(
 ).play
 )
 
+
+// tu peux même assigner très facilement un channel différent à chaque note !
+(
+Pbind(
+	'type', 'midi',
+	'midiout', m,
+	'degree', [0, 2],
+	'chan', [0, 1]
+).play
+
+)
+
 // je te propose ce petit truc en méga bonus (permet de simuler une "panic" :
 (
 g = { 16.do({ |i| m.allNotesOff(i) }) };

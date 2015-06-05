@@ -1,5 +1,5 @@
 (
-var paths=["midiConnect.scd"];
+var paths=["midiConnect.scd", "separer.scd"];
 paths=paths.collect(
 	_.resolveRelative
 );

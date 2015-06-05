@@ -37,7 +37,7 @@
 //
 // pour l'instant on a que des intervalles interdits
 
-// TODO: améliorer les règles
+// TODO: améliorer les règles, améliorer TOUT
 
 
 ~trouverTransformations={ |mel, notesInterdites=#[3,-3,1,-1]|

@@ -7,8 +7,11 @@
 };
 
 
+// Version améliorée de la suite précédente
 
-///// génère l'accompagnement demandé par rapport à une suite d'intervalles et une mélodie
+///// génère tous les accompagnements
+///// demandés par rapport à une suite d'intervalles et une mélodie
+// avec gestion de 'nil' = consonance aléatoire dans un set
 
 (
 ~accompagnement={ |mel, mObl=#[nil], consonances=#[2]|
@@ -22,25 +25,6 @@
 				{nil} { consonances.includes(x.absdif(y)) }
 				{ x.absdif(y) == m };
 		}
-	})
+	}).allTuples
 }
 )
-
-// EXEMPLE
-//
-// (
-// ~mel= [0, 4, 2, 3,4,5,1,3,7,5,4];
-// a=~accompagnement.(~mel, [2, 1, 2]).allTuples;
-//
-// p=a.collect(_.reject(_=='rest')).select({ |i| (i.sum).isPositive });
-// ("les positives: "+p.size).postln;
-// n=a.collect(_.reject(_=='rest')).select({ |i| (i.sum).isNegative });
-// ("les negatives: "+n.size).postln;
-//
-//
-// ~res=~mel+++(n.choose).postln;
-//
-// (Pbind(\degree, Pseq([0, 1, 2, 3]) +.x
-// Pseq(~res, inf), \dur, 1) ).play
-//
-// )
