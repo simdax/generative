@@ -10,7 +10,7 @@
 	Array.fill(nbNotes, { [0,1,2,3,4,5,6]
 		.wchoose([0.4,0.25 ,0.25 ,0.35 ,0.4 ,0.25 ,0.15 ].collect(_/(1/0.5)))})
  );
-	("mel généré = " ++mel).postln;
+	("mel générée = " ++mel).postln;
 	mel
 };
 

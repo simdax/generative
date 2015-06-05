@@ -13,7 +13,7 @@ Module découpé en trois modules
 
 1. Generation
 	* analyserIntervalles
-	* laTotale // FIX
+	* laTotale // FIX, c'est plutôt "analyserTransformations"
 	* trouverTransformations
 
 1. harmonisation simple

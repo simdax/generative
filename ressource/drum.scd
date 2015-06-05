@@ -1,4 +1,4 @@
-
+(
 /* ----------------------
    Synthetic bass drum
    ---------------------- */
@@ -18,9 +18,7 @@
 		phase = SinOsc.ar(20,0,pi) * phase_env;
 		SinOsc.ar([freq,1.01*freq],phase) * amp_env * amp;
 	}
-}
-
-~bass.value.play;
+};
 
 
 
@@ -40,9 +38,7 @@
 		amp_env = EnvGen.ar(Env.perc(1e-6, dur), doneAction:2);
 		LPF.ar( {WhiteNoise.ar(WhiteNoise.ar)}.dup * amp_env, cut_freq ) * amp;
 	}
-}
-
-~snare.value.play;
+};
 
 
 
@@ -62,10 +58,7 @@
 		amp_env = EnvGen.ar(Env.perc(1e-7, dur), doneAction:2);
 		HPF.ar( {WhiteNoise.ar}.dup * amp_env, cut_freq ) * amp / 4;
 	}
-}
-
-~hat.value.play;
-
+};
 
 /* ------------------------
    Simple 8-step sequencer
@@ -78,13 +71,16 @@
 		var amp = beat_list.wrapAt(i);
 		if( amp>0, { synth.value(amp).play } );
 	}
-}
+};
 
-~bd_player = ~player.value([1, 1, 0, 0.1, 0.5, 0, 0, 1], ~bass);
+
+)
+
+/*
+
+~bd_player = ~player.value([1, 1, 0, 1, 0], ~bass);
 ~sn_player = ~player.value([1, 0.1, 0.75, 0, 0.175, 0, 1, 0.5], ~snare);
 ~hh_player = ~player.value([1, 0.1, 0.1, 1, 0.25, 0.1, 0.75, 0.5], ~hat);
-
-
 (
 c = TempoClock.new(1);
 ~swing = 0.3; // swing amount
@@ -108,4 +104,4 @@ c.tempo = 6;
 ~sn_player = ~player.value([0], ~snare);
 ~hh_player = ~player.value([0], ~hat);
 
-NodeTree
+*/

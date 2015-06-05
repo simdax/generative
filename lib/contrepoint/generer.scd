@@ -4,6 +4,11 @@
 ///// les transformations contrapuntiques qui peuvent s'harmoniser
 ///// avec l'original
 
+
+(
+
+// analyserIntervalles sort tous les intervalles possibles entre une mélodie et plusieurs
+// autres, tout en variant le placement rythmique de la première.
 // avec changements rythmiques et de hauteur
 /// TODO intégrer les changements de hauteurs
 
@@ -12,11 +17,11 @@
 		hypotheses.size.collect(
 			x absdif: hypotheses[_]
 		)
-	})
+	}).unbubble(1)
 };
-// ~analyserIntervalles.( [0,1,2,5], [1,5,7,4])
+// ~analyserIntervalles.( [0,1,2,5], [1,5,7,4], [9, 5])
 
-/// pseudo fonction
+/// pareil que analyserIntervalles, mais par rapport à elle-même, et avec des transformations
 // TODO : la transformer en quelque chose de propre qui analyse le rapport entre une
 // mel et un ensemble de fonction qui la transforme, de la forme
 // analyse. ( mel,  'neg', { |x| x+4} ) etc.
@@ -60,4 +65,4 @@
 
 };
 
-// check l'exemple dans les exemples
+)

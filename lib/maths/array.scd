@@ -65,7 +65,7 @@ array.doAdjacentPairs({ |a, b|
 
 //détecte l'array le plus conséquent dans un array multi-dimensions
 //
-//~selectSize.([ [0,5,1,2,4], [2,4,1,5,1,5,1] ])
+//~selectSize.([ [0,5,1,2,4], [2,4,1,5,1,5,1], [5,4,1] ])
 
 ~selectSize={ |arr|
 	var x=arr.collect(_.size).maxIndex;

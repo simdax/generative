@@ -53,20 +53,20 @@
 	.unbubble
 
 };
-
+)
 // TODO : filtrer pour trouver la "meilleure" métrique
+(
 
-// ~detectMesurePos.(
-//
-// 	~detectMesurePos={ |ry|
-//
-// 		var x=~allPerm.(ry).collect(
-// 			~detectMesure.( _ )
-// 		);
-// 		~detectSize.(x)
-//
-// 	}
+	~detectMesurePos={ |ry|
 
+	var result=~ttesPossibilites.(ry).collect(
+			~detectMesure.( _ )
+		);
+	~selectSize.(result)
 
+	};
+
+~detectMesurePos.([0,1,1]).postln;
+"done"
 
 )
