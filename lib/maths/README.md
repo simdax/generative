@@ -4,15 +4,17 @@ MATH
 Simple bibliothèque pour créer des fonctions d'aide à des transformations mathématiques
 
 
-*PATTERN MATCHING
-** trouverPattern, pour saisir des régularités dans une suite de données
-
 * TRITURAGE D'ARRAY
 ** allPerm
 ** ttesPossibilites
 ** eachSub
 
-* GESTION DES DUPLICATES
+* calcul
+** mydiv
+** mydivar
+
+*PATTERN MATCHING
+** trouverPattern, pour saisir des régularités dans une suite de données
 ** detectDuplicates
 ** removeDuplicates
 ** detectNbOccurences
@@ -24,3 +26,4 @@ Simple bibliothèque pour créer des fonctions d'aide à des transformations mat
 * LISIBILITE
 ** convertirNotes
 ** enNotes TODO !
+** visualiserAnalyse

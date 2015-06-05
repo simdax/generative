@@ -28,4 +28,18 @@
 	// .reshapeLike(mels.shape[1]+1);
 };
 
+
+
+/////
+///// montre en console une petite matrice avec les possibilités harmoniques
+
+~visualiserAnalyse= { |matrice, r=((0..6)) |
+	var roots=~sortSolfege.(r);
+	roots.collect({|x|
+		matrice.collect(_.includes(x)) })
+	.deepCollect(2, {|x| if(x) {'o'}{'x'} })
+	.collect({ |i, index|
+		((~convertirNotes.(roots[index])).asString+" = "+i).postln
+	});
+};
 )

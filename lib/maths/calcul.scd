@@ -19,8 +19,34 @@
 		~myDiv.(x, b, prec)
 	})
 
-}
+};
 
 
+// comme select, mais renvoie l'index
+// ATTENTION : PARTIALS NE MARCHENT PAS !
+/*
+~selectIndex.([0,5,1,4,2,1,5,1], {|x| x.even}) ==> [ 0, 3, 4 ]
+~selectIndex.([0,5,1,4,2,1,5,1], {_.even}) ==> error
+*/
+
+~selectIndex={  |array, function|
+
+	array.collect({ |i, index|
+		if(
+		(function.(i) == true),
+		{index},
+		{nil}
+		)
+	}).reject(_.isNil)
+};
+
+//détecte l'array le plus conséquent dans un array multi-dimensions
+//
+//~selectSize.([ [0,5,1,2,4], [2,4,1,5,1,5,1], [5,4,1] ])
+
+~selectSize={ |arr|
+	var x=arr.collect(_.size).maxIndex;
+	arr[x]
+};
 
 )
