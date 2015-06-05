@@ -10,6 +10,9 @@
 /// pas intéressant quand on a ~trouverPatterns.( [1,1,1,1,1] )
 // d'avoir [ [ [ 0 ], [ 1 ] ], [ [ 0 ], [ 2 ] ], [ [ 0 ], [ 3 ] ], [ [ 0 ], [ 4 ] ], [ [ 0, 1 ], [ 2, 3 ] ], [ [ 0, 1 ], [ 3, 4 ] ], [ [ 1 ], [ 2 ] ], [ [ 1 ], [ 3 ] ], [ [ 1 ], [ 4 ] ], [ [ 1, 2 ], [ 3, 4 ] ] ]
 // c'est TROP informatif !!
+/*
+~trouverPatterns.(~genererMel.())
+*/
 
 ~trouverPatterns={ |array|
 	var a=array;
@@ -21,17 +24,16 @@
 
 		var rangeUn=(0+drop..taille+drop),
 		var rangeDeux=( (taille+1+drop+increment)..( (taille*2)+1+drop+increment) ),
-/*
-		::(a[rangeUn]).postln,
-		::(a[rangeDeux]).postln,
-		::",".postln,*/
 
 		a[rangeUn] == a[rangeDeux]
 	}
-	.unbubble(2);/*
-	("trouvé "+b.size+" patterns").postln;
-	b.postln;*/
+	// la on isole les occurences
+	.unbubble(2)
+	.reduce(\union)
+
 };
+
+
 
 // *******************
 ////////
