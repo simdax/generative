@@ -8,6 +8,7 @@ Simple bibliothèque pour créer des fonctions d'aide à des transformations mat
 ** allPerm
 ** ttesPossibilites
 ** eachSub
+** shapePlus
 
 * calcul
 ** mydiv

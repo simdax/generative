@@ -23,4 +23,4 @@ et la mesure ou le rapport entre plusieurs mels
 3. analyse
 
 	*matchPoints
-	*schemaR
+	*shapeR

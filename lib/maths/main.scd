@@ -1,5 +1,5 @@
 (
-var paths=["array.scd", "calcul.scd", "analyse.scd", "lisibilite.scd"];
+var paths=["array.scd", "calcul.scd", "patternMatching.scd", "lisibilite.scd"];
 paths=paths.collect(
 	_.resolveRelative
 );
