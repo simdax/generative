@@ -12,7 +12,7 @@
     ~basses=~pasRepetitions.(~basses);
 
 	~bassesH=~basses[0];
-	~bassesR=~schemaR.(~melD, ~basses[1]);
+	~bassesR=~shapeR.(~melD, ~basses[1]);
 };
 
 

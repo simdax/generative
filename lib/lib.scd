@@ -22,6 +22,12 @@ this.executeFile(_);
 
 )
 
+
+(
+
+~faireMel.();
+
+)
 // pour MAC, apparement ça fonctionne
 
 (
@@ -32,4 +38,6 @@ m=MIDIOut(0);
 //test
 m.noteOn(0, 60, 60)
 )
+
+
 

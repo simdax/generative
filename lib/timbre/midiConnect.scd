@@ -19,7 +19,7 @@ CmdPeriod.add(g);
 ~enMidi.([0,1,2]).trace.play
 */
 
-~enMidi = { |mel=#[0], dur=#[1], chan=0, prg=0|
+~midi = { |mel=#[0], dur=#[1], chan=0, prg=0|
 
 m.program(chan, prg);
 
@@ -33,9 +33,10 @@ Pbind(
 		\legato, 1
 	)
 	);
-/*	(Pbind() <> seq <> midi.value(chan, trans));*/
 };
-
+~enMidi={ |seq|
+	(Pbind() <> seq <> (type: 'midi', midiout: m));
+};
 ~panic= (
 		\type: \midi,
 		\midicmd: \allNotesOff,
@@ -43,7 +44,7 @@ Pbind(
 		\chan: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
 );
 
-~nO={
+~no={
 	m.noteOn(0, 60, 60)
 };
 

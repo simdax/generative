@@ -20,6 +20,8 @@ TempoClock.tempo=0.35;
 	)
 });
 )
+
+
 (
 h=PlazyEnvir( { |note, typeCtrp=2, dur, consonnance |
 
@@ -28,11 +30,10 @@ Pbind(
 )}
 )
 )
-h <> (note:)
-)
 
-Pbind().play
+(
 Ppar([~sujet.(~motif), ~harm.(~motif.removing(\rest),1/2) ]).play
+)
 
 (
 var marche=[5,3,1,-1].collect({ |i| ~sujet.(~motif.neg + i , 1/8)});
@@ -86,7 +87,7 @@ Pxrand([     // Pxrand ne répète jamais deux fois la même chose
 ).trace.play
 )
 
-[4, 6, 3, 5
+/*[4, 6, 3, 5
 4 thème
 4, 6, 3, 5
 	2 marche(thème)]
@@ -99,4 +100,4 @@ Pxrand([     // Pxrand ne répète jamais deux fois la même chose
 5, 2, 2, 2,
 2 ,2, 2, 5,
 2 5 4
-0
+0*/

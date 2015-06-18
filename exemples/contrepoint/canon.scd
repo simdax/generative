@@ -15,6 +15,6 @@ while(
 b.postln;
 c=~formePyramidale.(b);
 
-~enMidi.(Pdef(\playPyramide)).trace.play
+ ~enMidi.(Pdef(\playPyramide)).trace.play
 
 )
