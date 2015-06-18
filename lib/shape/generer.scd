@@ -23,7 +23,12 @@
 	b= enveloppe.discretize(nbNotes);
 c = b.linlin(b.minItem, b.maxItem, 0, ambitus)
 .nearestInScale(~tetracorde, modulo)
+};
+
+~wrapMel={ |mel, tonique=(-3), octave=7|
+	mel.wrap(tonique, tonique+octave)
 }
-
-
+// ~wrapMel.(Array.rand(5,0,6))
 )
+
+

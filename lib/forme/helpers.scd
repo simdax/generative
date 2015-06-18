@@ -11,6 +11,8 @@
 
 };
 
+// array de hauteur+dur et en sort le Pbind correspondant
+
 ~genMel={ |mel|
 
 	Pdef(\mel,
@@ -22,13 +24,19 @@
 	))
 };
 
+// chope un array de basses + rythme
+// par défaut toutes les valeurs wrappent sauf les basses
+// TODO ==> ajouter nature accords
+/*
+~genContinuo.([0,1,2, 1]).play
+*/
 
-~genContinuo={ |acc|
+~genContinuo={ |basses, ry=#[1], natures=#[[0,2,4]]|
 
 	Pdef(\accords,
 		Pbind(
-			\degree, [0,2,4] + Pseq(acc[0]),
-			\dur, Pseq(acc[1]),
+			\degree, Pseq(natures, inf) + Pseq(basses),
+			\dur, Pseq(ry, inf),
 			\amp, 0.7,
 			\legato, 1
 	))

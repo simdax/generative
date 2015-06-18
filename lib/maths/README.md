@@ -9,10 +9,13 @@ Simple bibliothèque pour créer des fonctions d'aide à des transformations mat
 ** ttesPossibilites
 ** eachSub
 ** shapePlus
+** selectIndex
+** selectSize
 
-* calcul
+* CALCUL
 ** mydiv
 ** mydivar
+** myGCD
 
 *PATTERN MATCHING
 ** trouverPattern, pour saisir des régularités dans une suite de données
@@ -20,9 +23,6 @@ Simple bibliothèque pour créer des fonctions d'aide à des transformations mat
 ** removeDuplicates
 ** detectNbOccurences
 
-* ITERATION
-** selectIndex
-** selectSize
 
 * LISIBILITE
 ** convertirNotes

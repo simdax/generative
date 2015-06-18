@@ -61,8 +61,18 @@
 };
 
 // affine les durées trop exotiques selon un schema
-//~affiner.([ 0.5, 2, 0.875, 2, 2, 1.25, 0.875, 1.625, 1.625 ], 0.25) ==> [ 0.5, 2, 1, 2, 2, 1, 1, 1.5, 2 ]
+// pour l'instant je n'ai pas très bien compris le principe de "quantize", mais
+// je pense que c'est le même principe
 
+/*
+~affiner.([ 0.5, 2, 0.875, 2, 2, 1.25, 0.875, 1.625, 1.625 ], 0.25)
+==> [ 0.5, 2, 1, 2, 2, 1, 1, 1.5, 2 ]
+
+à comparer avec
+[ 0.5, 2, 0.875, 2, 2, 1.25, 0.875, 1.625, 1.625 ].collect(_.quantize(0.05, 0.05, 1))
+==> [ 0.5, 2, 0.9, 2, 2, 1.25, 0.9, 1.65, 1.65 ]
+
+*/
 
 ~affiner={ |ry, rounder=0.5, tolerance = 0.2|
 
@@ -73,6 +83,22 @@
 		{y}
 	}).differentiate
 };
+
+
+)
+
+(
+
+all{
+	:x,
+	x <- (0
+	y <- [0.25, 0.5,1],
+
+	~myGCD.(x, y) == 2
+
+}
+
+// ~myGCD.(156.4,125)
 )
 
 

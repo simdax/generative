@@ -4,32 +4,36 @@
 };
 
 ~startMIDI={
+var g;
 MIDIClient.init;
-	m = MIDIOut(0);
-	// m.connect(~detect.());
-
+m = MIDIOut(0);
 g = { 16.do({ |i| m.allNotesOff(i) }) };
 CmdPeriod.add(g);
 };
 
 
 // [ parties à jouer, channel]
+// joue vite fait une melodie
 
-~enMidi = { |seq, chan=0, prg=0, trans=0|
+/*
+~enMidi.([0,1,2]).trace.play
+*/
 
+~enMidi = { |mel=#[0], dur=#[1], chan=0, prg=0|
 
-	// m.program(chan, prg);
-//	sleep~midi= { |chan=0 , trans=0|
+m.program(chan, prg);
 
-var midi = Pbind(
+	Pdef(\midi,
+Pbind(
 		\type, \midi,
 		\midiout, m,
-		/*
-		\chan, chan,
-		\gtranspose, trans
-		*/
+		\degree, Pseq(mel),
+		\dur, Pseq(dur, inf),
+		\amp, 1,
+		\legato, 1
+	)
 	);
-	(seq <> midi.value(chan, trans));
+/*	(Pbind() <> seq <> midi.value(chan, trans));*/
 };
 
 ~panic= (

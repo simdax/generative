@@ -42,4 +42,17 @@
 		((~convertirNotes.(roots[index])).asString+" = "+i).postln
 	});
 };
+
+///////////////////////////
+///////////////   Petits Helpers rythmiques
+
+~dur2points={ |durs|
+	[0] ++ durs.integrate
+};
+~points2dur= {|points|
+	~eachSub.(points, 2)
+	.collect(
+		(_[0] absdif:  _[1])
+	 )
+};
 )

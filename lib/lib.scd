@@ -2,7 +2,7 @@
 
 (
 
-var listeFichiers=["maths", "shape", "contrepoint", "harmonie", "rythme", "forme", "timbre"];
+var listeFichiers=["maths", "shape", "contrepoint", "harmonie", "rythme", "forme", "timbre", "gui"];
 var root="./".resolveRelative;
 var paths=listeFichiers.collect({ |i|
 	root++i++"/main.scd"
