@@ -1,30 +1,37 @@
 (
+
+var player;
+
 ~deplier={|array|
     array.collect({ |i|
         switch(i,
-            -3, 4,
-            -2, 5,
-            -1, 6,
-            i
+            0,6,
+            1,5,
+            2,4,
+            3,3,
+            -3,2,
+            -2,1,
+            -1,0
         )
     })
 };
-)
-
-(
-
 
 Window.closeAll;
 
 b=~analyseHarmonique.(
- Pdefn(\deg).source.list,
+    [0,4,10,1,2,4],
+    // Pdefn(\deg).source.list,
     ~troisAccords.().choose);
-
+b.postln;
 w=Window.new("harmonisator", Rect(800,800,500,500)).front.alwaysOnTop_(true);
-a=CompositeView(w, 800@800);
-a.addFlowLayout(5@5,5@5);
 
-c=["do", "re", "mi", "fa", "sol", "la", "si"].collect{ |i|
+a=CompositeView(w, Rect(0,0,800,800));
+z=CompositeView(w, Rect(20, 300, 100, 100))
+.background_(Color.red);
+
+a.addFlowLayout(15@15,5@5);
+
+c=["do", "re", "mi", "fa", "sol", "la", "si"].reverse.collect{ |i|
     var x;
     Button(a)
     .states_([
@@ -34,7 +41,7 @@ c=["do", "re", "mi", "fa", "sol", "la", "si"].collect{ |i|
         Button(a)
         .states_([
             ['O', Color.green, Color.white],
-            ['X', Color.yellow, Color.red]
+
         ]);
     });
     a.decorator.nextLine;
@@ -43,17 +50,48 @@ c=["do", "re", "mi", "fa", "sol", "la", "si"].collect{ |i|
 
 c=c.flop;
 b=b.collect(~deplier.(_));
-// c[0][0].value=1;
-// c[1][0].value=1;
-// c[2][1,2].value=1;
-// c[3][1].value=1;
-// c[4][1].value=1;
 
-b.collect({ |item, index|
+d=b.collect({ |item, index|
     item.collect({ |i|
-        c[index][i].value=1;
+        c[index][i]
+        .states_([
+            ['5', Color.yellow, Color.red],
+            ['6', Color.yellow, Color.red],
+            ['7', Color.yellow, Color.red]
+        ]);
     })
 });
+d=d.collect({ |i| i.choose.value.postln });
+Pdefn (\basses, Pseq(b) );
+Pdefn (\couleurs, Pseq(d.collect({ |i|
+    switch(i.value,
+        0, [0,2,4],
+        1, [0,2,5],
+        2, [0,2,4,6]
+    )
+    })
+));
+
+Pdefn(\couleurs).source.postcs;
+
+player=Pdef(\accompagnement,
+    Pbind(
+        \degree, Pdefn(\basses) + Pdefn(\couleurs)
+    )
+).stop;
+
+Button(z)
+.states_([
+    ["OFF"],
+    ["ON"]
+])
+.action_(
+player.play
+);
 
 )
-
+(
+Pbind(
+    \degree,    Pseq([0,1,[2,3]]) + Pseq([ [0,2,4] ], inf)
+).trace.play
+)
