@@ -1,12 +1,10 @@
 // AU BESOIN INSTALLER LES DEPENDANCES
 
 (
-
-File.copy("../ressource/lib/Grid".resolveRelative
-	,
-	Platform.userExtensionDir)
+File.copy("../ressource/lib/Grid/Grid.sc".resolveRelative,
+	Platform.userExtensionDir++"/Grid/");
+thisProcess.recompile
 )
-
 
 //ACTIVER LA LIB
 

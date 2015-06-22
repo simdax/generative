@@ -84,7 +84,8 @@ var un= CompositeView(w, Rect(25, 0, 500, 500));
 	.states_([
 		["RANDOM" , Color.red]
 	])
-	.action({
+	.action_({
+		"bah alors?".postln;
 		melodie.value_(Array.rand(nbNotes.value, 0, 1));
 		rythme.value_(Array.rand(nbNotes.value, 0.25, 1))
 	});
@@ -108,10 +109,10 @@ var un= CompositeView(w, Rect(25, 0, 500, 500));
 		);
 	});
 
-	onOff=Button(fen)
+	onOff=Button(fen, 25@25)
 	.states_([
-		["OFF", Color.black],
-		["ON", Color.red]
+		["jouer ?", Color.black],
+		["en écoute", Color.red]
 	])
 	.action_({ |b|
 		if( b.value.asBoolean,
