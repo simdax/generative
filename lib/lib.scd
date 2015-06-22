@@ -1,7 +1,16 @@
-//ACTIVER LA LIB
+// AU BESOIN INSTALLER LES DEPENDANCES
 
 (
 
+File.copy("../ressource/lib/Grid".resolveRelative
+	,
+	Platform.userExtensionDir)
+)
+
+
+//ACTIVER LA LIB
+
+(
 var listeDossiers=["maths", "shape", "contrepoint", "harmonie", "rythme", "forme", "timbre", "gui"];
 var root="./".resolveRelative;
 var paths=listeDossiers.collect({ |i|
@@ -15,7 +24,6 @@ this.executeFile(_);
 )
 //ACTIVER LE MIDI
 // par defaut, il détecte "fluid synth"
-//"CoolSoft VirtualMIDISynth"
 (
 
  ~startMIDI.();

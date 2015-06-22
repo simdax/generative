@@ -19,11 +19,10 @@ créer un outil permettant de régler une mélodie
 ~faireMel.()
 
 (
-var w=~fenetre.("melodisator");
+var w=~fenetre.("hjl");
 var un= CompositeView(w, Rect(25, 0, 500, 500));
 
-~faireMel.(un);
-
+~faireMel.(Window.new.front)
 
 )
 */
@@ -36,14 +35,19 @@ var un= CompositeView(w, Rect(25, 0, 500, 500));
 
 	//on definit un player
 
-	var player=Pdef( \player,
+	var player=
+	Pfset({},
+		Pdef( \melodie,
 		Pbind(
 			\degree, Pdefn(\deg),
 			\dur, Pdefn(\dur),
 			\type, 'midi',
 			\midiout, m,
 			\amp, 1
-		)
+		)),
+		{
+			{ onOff.value =0}.defer
+		}
 	).stop;
 
 	// definir fenetre
@@ -82,7 +86,7 @@ var un= CompositeView(w, Rect(25, 0, 500, 500));
 	])
 	.action({
 		melodie.value_(Array.rand(nbNotes.value, 0, 1));
-		rythme.value_(Array.rand(nbNotes.value, 0, 1))
+		rythme.value_(Array.rand(nbNotes.value, 0.25, 1))
 	});
 
 	modes=PopUpMenu(fen, 150@40)
