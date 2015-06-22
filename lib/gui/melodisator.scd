@@ -19,13 +19,12 @@ créer un outil permettant de régler une mélodie
 ~faireMel.()
 
 (
-var w=Window.new;
-var un= CompositeView(w, Rect(25, 0, 400, 400));
-var deux= CompositeView(w, Rect(425, 400, 400, 400));
+var w=~fenetre.("melodisator");
+var un= CompositeView(w, Rect(25, 0, 500, 500));
 
 ~faireMel.(un);
 
-w.front
+
 )
 */
 
@@ -79,10 +78,11 @@ w.front
 
 	Button(fen, 50@50)
 	.states_([
-		["random" , Color.red]
+		["RANDOM" , Color.red]
 	])
 	.action({
-		melodie.value_(Array.rand(nbNotes.value))
+		melodie.value_(Array.rand(nbNotes.value, 0, 1));
+		rythme.value_(Array.rand(nbNotes.value, 0, 1))
 	});
 
 	modes=PopUpMenu(fen, 150@40)

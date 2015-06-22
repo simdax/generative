@@ -4,14 +4,14 @@
 
 // separe un pbind en plusieurs pbind
 //
-// ~separerVoix={ | pbind |
-//
-// 	pbind.collect( |ev|
-// 		ev['degree'].collect( |note|
-// 			Pbind( degreenote)
-// 		)
-// 	)
-// }
+~separerVoix={ | pbind |
+
+	pbind.collect({ |ev|
+		ev['degree'].collect({ |note|
+			Pbind( \degree, note)
+		})
+	})
+}
 
 )
 

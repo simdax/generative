@@ -1,7 +1,7 @@
 
 
 (
-~fenetre={ |name, sizex, sizey|
+~fenetre={ |name, sizex=500, sizey=500|
 	var fen=Window.new(name, Rect(0,0, sizex, sizey))
 	.front
 	.alwaysOnTop_(true);
