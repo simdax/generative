@@ -29,7 +29,7 @@ var un= CompositeView(w, Rect(25, 0, 500, 500));
 
 
 ~faireMel= { |fenetre|
-	var fen, melodie, rythme, onOff,
+	var fen, melodie, rythme,
 	modes,	ambitus, scale, nbNotes;
 
 
@@ -46,13 +46,15 @@ var un= CompositeView(w, Rect(25, 0, 500, 500));
 			\amp, 1
 		)),
 		{
-			{ onOff.value =0}.defer
+			{ ~onOffMel.value =0}.defer;
 		}
 	).stop;
 
 	// definir fenetre
 
-	(fenetre.isNil).if {fen=~fenetre.("melodisator",500,500)} {fen=fenetre};
+	(fenetre.isNil).if
+	{fen=~fenetre.("melodisator",500,500)}
+	{fen=fenetre};
 
 	/// definir les boutons d'interaction
 
@@ -80,14 +82,21 @@ var un= CompositeView(w, Rect(25, 0, 500, 500));
 	.step_(0.25)
 	.value_(Array.fill(nbNotes.value, 0.5));
 
-	Button(fen, 50@50)
+	~randAll=Button(fen, 50@50)
 	.states_([
 		["RANDOM" , Color.red]
 	])
 	.action_({
-		"bah alors?".postln;
-		melodie.value_(Array.rand(nbNotes.value, 0, 1));
+		melodie.value_(Array.rand(nbNotes.value, 0.1, 1));
 		rythme.value_(Array.rand(nbNotes.value, 0.25, 1))
+	});
+	~randMel=Button(fen, 50@50)
+	.states_([
+		["RANDOM" , Color.red]
+	])
+	.action_({
+		melodie.value_(Array.rand(nbNotes.value, 0.1, 1));
+		rythme.value_(Array.fill(nbNotes.value, 1))
 	});
 
 	modes=PopUpMenu(fen, 150@40)
@@ -109,24 +118,23 @@ var un= CompositeView(w, Rect(25, 0, 500, 500));
 		);
 	});
 
-	onOff=Button(fen, 25@25)
+	~onOffMel=Button(fen, 100@25)
 	.states_([
 		["jouer ?", Color.black],
 		["en écoute", Color.red]
 	])
 	.action_({ |b|
+		b.value.postln;
 		if( b.value.asBoolean,
 			{
 				var mel=melodie.value.normalize(0,ambitus.value).round;
 				var ry=rythme.value;
-				"hauteurs : ".postln;
+
 				Pdefn(\deg, Pseq(mel));
-				Pdefn(\deg).source.postcs;
-				"rythme : ".postln;
 				Pdefn(\dur, Pseq(ry));
-				Pdefn(\dur).source.postcs;
 
 				player.play;
+
 			},
 			{
 				"stop".postln;
@@ -135,7 +143,6 @@ var un= CompositeView(w, Rect(25, 0, 500, 500));
 		);
 
 	});
-
 
 };
 

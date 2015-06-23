@@ -1,3 +1,4 @@
+(
 //// pour classer les consonnances ??
 
 ~sortSolfege={ |mel, ordreGrandeur=#[0,1, 2, 3, -3, -2, -1]|
@@ -88,7 +89,7 @@
 	.collect(_+.t [0,2,4,6]);
 };
 
-~analyseHarmonique={ |mel,structAccords=(~structureHarmonique.())|
+~analyseHarmonique={ |mel,structAccords=(~structureHarmonique.()), view=true|
 	var result=
 	~convertirMel.(mel)
 	.collect({ |i|
@@ -98,7 +99,9 @@
 		})
 	})
 	.collect( _.reject(_.isNil) );
-	~visualiserAnalyse.(result);
+	if ( view, {~visualiserAnalyse.(result)}) ;
 	result
 
 };
+
+)

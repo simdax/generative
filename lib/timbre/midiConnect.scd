@@ -34,8 +34,11 @@ Pbind(
 	)
 	);
 };
+~enMidiInf={ |seq|
+	(Pbind() <> seq <> (type: 'midi', midiout: m, amp:1));
+};
 ~enMidi={ |seq|
-	(Pbind() <> seq <> (type: 'midi', midiout: m));
+	(seq <> (type: 'midi', midiout: m, amp:1));
 };
 ~panic= (
 		\type: \midi,

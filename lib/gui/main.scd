@@ -1,7 +1,7 @@
 (
 
 
-var listeFichiers=["fenetre", "melodisator", ];
+var listeFichiers=["fenetre", "melodisator", "harmonisator", "sequencator" ];
 var root="./".resolveRelative;
 var paths=listeFichiers.collect({ |i|
 	root++i++".scd"
@@ -12,6 +12,3 @@ this.executeFile(_);
 )
 
 )
-
-
-

@@ -31,10 +31,11 @@ this.executeFile(_);
 
 
 (
+Window.closeAll;
 
-~faireMel.();
-
+~sequencator.();
 )
+
 // pour MAC, apparement ça fonctionne
 
 (
