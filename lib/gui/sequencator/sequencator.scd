@@ -3,15 +3,15 @@
 // TODO : faire en sorte d'avoir une petite time line
 ~sequencator={
 
-	var w=~fenetre.("SMS --- Super Mega Sequenceur", 100,100, 1100, 500);
-	/*var mel= CompositeView(w, Rect(0, 0, 500, 500));
-	var harmo= CompositeView(w, Rect(500, 500, 500, 500));
 
-*/
-/*
-	w.addFlowLayout(30@30);*/
-	~faireMel.();
-	~harmonisator.();
+	var w=~fenetre.("SMS --- Super Mega Sequenceur", 1100,1000);
+	var mel= CompositeView(w, 500@500).background_(Color.rand);
+	var harmo= CompositeView(w, 500@500).background_(Color.rand);
+	mel.addFlowLayout;
+	harmo.addFlowLayout;
+
+	~melodisator.(mel);
+	~harmonisator.(harmo);
 
 
 
