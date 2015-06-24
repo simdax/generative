@@ -29,15 +29,6 @@ this.executeFile(_);
 
 )
 
-
-(
-Window.closeAll;
-
-~sequencator.();
-)
-
-// pour MAC, apparement ça fonctionne
-
 (
 
 MIDIClient.init;
@@ -47,5 +38,11 @@ m=MIDIOut(0);
 m.noteOn(0, 60, 60)
 )
 
+(
+Window.closeAll;
 
+~mainView.();
+)
+
+// pour MAC, apparement ça fonctionne
 

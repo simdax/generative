@@ -100,6 +100,8 @@
 			\type, \midi,
 			\midiout, m,
 			\degree, Pdefn(\basses) + Pdefn(\couleurs),
+			\dur, Pdefn(\dur), // les durées de la mélodie
+			\scale, Pdefn(\scale)
 			\amp, 0.6
 		)
 	).stop.quant=2; // on doit rajouter stop parce que sinon ce con part tout seul...
