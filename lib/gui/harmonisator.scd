@@ -20,13 +20,25 @@
 
 ~harmonisator={ |fenetre|
 
+	// variable pour les fenetres
+
 	var hauteurPrincipale=500;
 	var largeurPrincipale=500;
 	var hauteurBoutons=300;
 	var largeurBoutons=largeurPrincipale;
+	var analyse, boutonsCouleur, couleurs; // pour le son
 
 	//lien avec la melodie a harmoniser
+	var analyserMel={
 
+		// on chope la mélodie via Pattern proxy
+		var melodie= Pdefn(\deg).source.list.asInteger;
+
+		~analyseHarmonique.(
+			melodie,
+			~troisAccords.().choose,
+			false);
+	};
 
 	// les affichages
 
@@ -78,47 +90,7 @@
 			x;
 		}.flop;
 	};
-	// fonction pour changer ce qui doit être harmonisé
 
-	var harmoniser={
-		var melodie= Pdefn(\deg).source.list.asInteger;
-
-		// on analyse
-
-
-		var analyse=~analyseHarmonique.(
-			melodie,
-			~troisAccords.().choose,
-			false);
-
-
-		// on change les boutons comme il faut
-		// on stocke le résultat dans pointsRouges
-
-		var pointsRouges=analyse.collect(~deplier.(_)).collect({ |item, index|
-			item.collect({ |i|
-				~boutons[index][i]
-				.states_([
-					['5', Color.yellow, Color.red],
-					['6', Color.yellow, Color.red],
-					['7', Color.yellow, Color.red]
-				]);
-			})
-		});
-
-		// on règle les patterns
-		var couleurs=pointsRouges.collect(_.choose).value;
-		Pdefn (\basses, Pseq(analyse.collect(_.choose)) );
-		Pdefn (\couleurs, Pseq(couleurs.collect({ |i|
-			switch(i.value,
-				0, [0,2,4],
-				1, [0,2,5],
-				2, [0,2,4,6]
-			)
-			})
-		));
-
-	};
 
 	// set des patterns et du player
 
@@ -127,10 +99,61 @@
 		Pbind(
 			\type, \midi,
 			\midiout, m,
-			\degree, Pdefn(\basses) + Pdefn(\couleurs)
+			\degree, Pdefn(\basses) + Pdefn(\couleurs),
+			\amp, 0.6
 		)
-	).stop;
+	).stop.quant=2; // on doit rajouter stop parce que sinon ce con part tout seul...
 
+	var update={
+
+		// on règle les patterns
+
+		var coul=boutonsCouleur.deepCollect(2, { |i|
+			switch(i.value,
+				0, [0,2,4],
+				1, [0,2,5],
+				2, [0,2,4,6]
+			)
+			});
+
+		// TODO: pour l'instant, on choisit encore aléatoirement les accords
+
+		Pdefn (\basses, Pseq(analyse.collect(_.choose)) );
+		Pdefn (\couleurs, Pseq(coul.collect(_.choose)));
+
+	};
+
+
+	// fonction pour changer ce qui doit être harmonisé par rapport à la melodie
+
+	var harmoniser={
+
+		// on analyse
+		analyse=analyserMel.();
+
+		// on change les boutons comme il faut
+		// on stocke le résultat dans pointsRouges
+
+		boutonsCouleur=analyse.collect(~deplier.(_)).collect({ |item, index|
+			item.collect({ |i|
+				~boutons[index][i]
+				.states_([
+					['5', Color.yellow, Color.red],
+					['6', Color.yellow, Color.red],
+					['7', Color.yellow, Color.red]
+				])
+				.action_({
+					update.(analyse, couleurs);
+				});
+			})
+		});
+
+		// et on update le son
+		update.();
+	};
+
+
+	///// et on y va !
 
 	initialiserFenetre.();
 
@@ -149,7 +172,7 @@
 	~onOffHarmo=Button(z, 50@50)
 	.states_([
 		["OFF"],
-		["ON"]
+		["en écoute", Color.red]
 	])
 	.action_({ |self|
 		if (self.value==1,
@@ -160,7 +183,7 @@
 	initialiserBoutons.();
 
 	Slider(z)
-	.value_(0.8)
+	.value_(0.6)
 	.step_(0.1)
 	.action_({ |self|
 		Pbindef(\accompagnement, \amp, self.value);

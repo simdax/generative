@@ -36,19 +36,25 @@ var un= CompositeView(w, Rect(25, 0, 500, 500));
 	//on definit un player
 
 	var player=
-	Pfset({},
-		Pdef( \melodie,
+	Pdef( \melodie,
 		Pbind(
 			\degree, Pdefn(\deg),
 			\dur, Pdefn(\dur),
 			\type, 'midi',
 			\midiout, m,
 			\amp, 1
-		)),
-		{
-			{ ~onOffMel.value =0}.defer;
-		}
-	).stop;
+	)).stop.quant=2;
+
+	// et une fonction permettant de l'updater
+
+	var update={
+
+		var mel=melodie.value.normalize(0,ambitus.value).round;
+		var ry=rythme.value;
+
+		Pdefn(\deg, Pseq(mel));
+		Pdefn(\dur, Pseq(ry));
+	};
 
 	// definir fenetre
 
@@ -75,12 +81,18 @@ var un= CompositeView(w, Rect(25, 0, 500, 500));
 	melodie=MultiSliderView(fen, 200@200)
 	.elasticMode_(1)
 	.step_(0.125)
-	.size_(nbNotes.value);
+	.size_(nbNotes.value)
+	.action_({
+		update.()
+	});
 
 	rythme=MultiSliderView(fen, 200@200)
 	.elasticMode_(1)
 	.step_(0.25)
-	.value_(Array.fill(nbNotes.value, 0.5));
+	.value_(Array.fill(nbNotes.value, 0.5))
+	.action_({
+		update.()
+	});
 
 	~randAll=Button(fen, 50@50)
 	.states_([
@@ -127,13 +139,13 @@ var un= CompositeView(w, Rect(25, 0, 500, 500));
 		b.value.postln;
 		if( b.value.asBoolean,
 			{
-				var mel=melodie.value.normalize(0,ambitus.value).round;
-				var ry=rythme.value;
 
-				Pdefn(\deg, Pseq(mel));
-				Pdefn(\dur, Pseq(ry));
-
-				player.play;
+				update.();
+				Pfset({},
+					player,
+					{
+						{ ~onOffMel.value =0}.defer;
+				}).play(quant:2);
 
 			},
 			{

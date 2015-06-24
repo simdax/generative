@@ -3,11 +3,11 @@
 // TODO : faire en sorte d'avoir une petite time line
 ~sequencator={
 
-	var w=~fenetre.("SMS --- Super Mega Sequenceur", 500, 500);
-	var mel= CompositeView(w, Rect(0, 0, 500, 500));
+	var w=~fenetre.("SMS --- Super Mega Sequenceur", 100,100, 1100, 500);
+	/*var mel= CompositeView(w, Rect(0, 0, 500, 500));
 	var harmo= CompositeView(w, Rect(500, 500, 500, 500));
 
-
+*/
 /*
 	w.addFlowLayout(30@30);*/
 	~faireMel.();
@@ -34,7 +34,7 @@
 					[\melodie, \accompagnement]
 				],
 				inf)
-			).play },
+			).play(quant:1) },
 
 			0, {     CmdPeriod.run } // oui c'est un peu feinteux :)
 		)
