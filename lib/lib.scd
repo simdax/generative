@@ -1,9 +1,16 @@
 // AU BESOIN INSTALLER LES DEPENDANCES
 
 (
-File.copy("../ressource/lib/Grid/Grid.sc".resolveRelative,
-	Platform.userExtensionDir++"/Grid/");
-thisProcess.recompile
+
+var listeQuarks = ["TabbedView2"];
+
+a=listeQuarks.collect({ |i|
+	(Quarks.isInstalled(i)).not.if
+	{Quarks.install(i) ; true };
+});
+
+if (a.includes(true), {thisProcess.recompile});
+
 )
 
 //ACTIVER LA LIB
@@ -29,13 +36,15 @@ this.executeFile(_);
 
 )
 
+
+// pour MAC (PC ?), apparement ça fonctionne
 (
 
 MIDIClient.init;
 m=MIDIOut(0);
 
 //test
-m.noteOn(0, 60, 60)
+~no.()
 )
 
 (
@@ -44,5 +53,4 @@ Window.closeAll;
 ~mainView.();
 )
 
-// pour MAC, apparement ça fonctionne
 

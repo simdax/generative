@@ -15,67 +15,28 @@
 
 créer un outil permettant de régler une mélodie
 
-
-~faireMel.()
+	//TODO : faire en sorte de donner des ID aux melodies
+	// regarder la classer ObjectTable ?
 
 (
-var w=~fenetre.("hjl");
-var un= CompositeView(w, Rect(25, 0, 500, 500));
 
-~faireMel.(Window.new.front)
-
+a=~melodisator.()
+a
 )
 */
 
 
-~melodisator= { |fenetre|
+~melodisator= { |fen=(~fenetre.())|
 
 	// variables
 
-	var fen, melodie, rythme,
+	var melodie, rythme,
 	modes,	ambitus, scale, nbNotes,
-	//TODO : faire en sorte de donner des ID aux melodies
-	// regarder la classer ObjectTable ?
-	name = "robert",
-	player, update
-	;
+	player, update,
+	envir;
 
-	// definir fenetre
 
-	(fenetre.isNil).if
-	{fen=~fenetre.("melodisator",500,500)}
-	{fen=fenetre};
-
-	// on donne un nom à notre melodie
-
-	/*~id= TextField(fen, 50@60)
-	.string_( name.asString )
-*/
 	//on definit un player
-
-	player=
-	Pdef( \melodie,
-		Pbind(
-			\degree, Pdefn(\deg),
-			\dur, Pdefn(\dur),
-			\type, 'midi',
-			\midiout, m,
-			\amp, 1
-	)).stop.quant=2;
-
-	// et une fonction permettant de l'updater
-
-	update={
-
-		// pour l'instant c'est un peu bourrin
-		var mel=melodie.value.normalize(0,ambitus.value).round;
-		var ry=rythme.value;
-
-		Pdefn(\deg, Pseq(mel));
-		Pdefn(\dur, Pseq(ry));
-	};
-
-
 
 	/// definir les boutons d'interaction
 
@@ -86,7 +47,7 @@ var un= CompositeView(w, Rect(25, 0, 500, 500));
 	.action_({
 		update.()
 	});
-	~texte.(fen, "ambitus");
+	~texte.(fen.view, "ambitus");
 
 	nbNotes=NumberBox(fen, 30@30)
 	.value_((4..9).choose)
@@ -95,7 +56,7 @@ var un= CompositeView(w, Rect(25, 0, 500, 500));
 		rythme.value_(Array.fill(obj.value,0));
 		update.()
 	});
-	~texte.(fen, "nombre de notes");
+	~texte.(fen.view, "nombre de notes");
 
 	// mes gros sliders que j'aime
 
@@ -116,30 +77,11 @@ var un= CompositeView(w, Rect(25, 0, 500, 500));
 	});
 
 
-	modes=PopUpMenu(fen, 150@40)
-	.items_( [
-		"diatonique majeur",
-		"diatonique mineur",
-		"pentatonique majeure",
-		"pentatonique mineure",
-		"chromatique"
-	])
-	.action_({ |b|
-		b.value.postln;
-		switch(b.value,
-			0, {Pbindef( \melodie, \scale, Scale.major)},
-			1, {Pbindef( \melodie, \scale, Scale.minor)},
-			2, {Pbindef( \melodie, \scale, Scale.majorPentatonic)},
-			3, {Pbindef( \melodie, \scale, Scale.minorPentatonic)},
-			4, {Pbindef( \melodie, \scale, Scale.chromatic)},
-		);
-	});
-
 	// les boutons qui sont d'interface, et utilisés par sequencator
 
 	~randAll=Button(fen, 50@50)
 	.states_([
-		["RANDOM" , Color.red]
+		["RANDOM tout" , Color.red]
 	])
 	.action_({
 		melodie.value_(Array.rand(nbNotes.value, 0.1, 1));
@@ -148,7 +90,7 @@ var un= CompositeView(w, Rect(25, 0, 500, 500));
 
 	~randMel=Button(fen, 50@50)
 	.states_([
-		["RANDOM" , Color.red]
+		["RANDOM mélodie" , Color.red]
 	])
 	.action_({
 		melodie.value_(Array.rand(nbNotes.value, 0.1, 1));
@@ -183,7 +125,38 @@ var un= CompositeView(w, Rect(25, 0, 500, 500));
 
 	});
 
+// on définit enfin notre environnement
+
+	envir=
+	(
+
+		player:
+	Pdef( \melodie,
+		Pbind(
+			\degree, Pdefn(\deg),
+			\dur, Pdefn(\dur),
+			\type, 'midi',
+			\midiout, m,
+			\amp, 1
+	)).asESP,
+
+	// et une fonction permettant de l'updater
+
+	update:{ |self|
+
+		// pour l'instant c'est un peu bourrin
+		var mel=melodie.value.normalize(0,ambitus.value).round;
+		var ry=rythme.value;
+
+		Pdefn(\deg, Pseq(mel));
+		Pdefn(\dur, Pseq(ry));
+	}
+
+	)
+
+
 };
 
 )
-
+a.player.source.postcs
+a.player.play
