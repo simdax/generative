@@ -65,7 +65,7 @@ Pbind(
 a=Pbind(
 
 	\accord, [0,2,4],
-	\arpeggiator, Pseq([0,0,1,0,2,0,1,0]),
+	\arpeggiator, Pseq([0,0,[0,2],0,2,[0,1],1,[0,1,2]], inf), // on rajoute même un accord à la fin
 
 	\degree, Pindex(Pkey(\accord), Pkey(\arpeggiator))
 

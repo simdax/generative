@@ -32,8 +32,8 @@
 };
 
 // pour faire une vue qui s'adapte de tant au parent
-~view={ |parent, indiceReduction|
-	var a=CompositeView(parent, (parent.bounds.width/indiceReduction)@(parent.bounds.height/indiceReduction))
+~view={ |parent, indiceReductionLargeur=2.1, indiceReductionHauteur=2.1|
+	var a=CompositeView(parent, (parent.bounds.width/indiceReductionLargeur)@(parent.bounds.height/indiceReductionHauteur))
 	.background_(Color.rand);
 	a.addFlowLayout;
 	a;
