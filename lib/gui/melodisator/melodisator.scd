@@ -158,5 +158,3 @@ a=~melodisator.()
 };
 
 )
-a.player.source.postcs
-a.player.play

@@ -1,4 +1,5 @@
 // AU BESOIN INSTALLER LES DEPENDANCES
+Quarks.gui
 
 (
 
@@ -22,9 +23,15 @@ var paths=listeDossiers.collect({ |i|
 	root++i++"/main.scd"
 });
 
-paths.collect(
+var result=paths.collect(
 this.executeFile(_);
 );
+
+result=result.select({ arg i;
+	i.isNil
+}).postln;
+
+("il y a "+result.size+"probleme(s)").postln;
 
 )
 //ACTIVER LE MIDI

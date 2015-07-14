@@ -57,7 +57,8 @@ var b= Array.fill(nbSliders, {
 nbSliders.collect{ |i| Slider(b[i], 20@100) };
 };
 
-
+// demande TabbedView
+/*
 ~mainView={ |fen =(~fenetre.())|
 
 w=Window.new("timeline", Rect(0,0,1000, 1000));
@@ -72,5 +73,6 @@ var v=t.add("test"++i.asString, scroll:true);
 ~balancerMel.(v)
 }
 }
+*/
 )
 
