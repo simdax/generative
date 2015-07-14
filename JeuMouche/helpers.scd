@@ -1,6 +1,10 @@
 // helpers
 /*
 
+Quarks.gui
+Quarks.install("/Users/dallas/Downloads/SCUtils-0.11")
+
+Platform.resourceDir
 
 OSCFunc.trace(true)
 OSCFunc.trace(false)
