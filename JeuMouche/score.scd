@@ -1,34 +1,70 @@
 (
-var notes=Array.rand(4, 0, echelle).postln;
-var durees=Array.rand(4, 1, 3).postln;
-var echelle=10;
-var offsetX=0, offsetY=20;
 
-w = Window.new.front;
+/*
+(
+var notes=Array.rand(4, 1, 8).postln;
+var durees=Array.rand(4, 1, 4).postln;
+a=~score.(notes, durees);
 
-// on normalize pour la largeur
-durees=[0]++durees.integrate;
-durees=durees.normalize(0+offsetX, w.bounds.width-offsetX);
-// on normalise à l'envers pour la hauteur
-notes=notes.linlin(0, echelle, echelle, 0).postln;
-notes=notes.linlin(0, echelle, 0, w.bounds.height-offsetY);
-// et on match le tout
-p= notes+++ durees;
-p.postln;
+// on peut updater
+a.notes=Array.rand(4, 1, 8).postln;
+a.durees=Array.rand(4, 1, 4).postln;
+a.rafraichir
 
 
+var notes=Array.rand(4, 1, 8).postln;
+var durees=Array.rand(4, 1, 4).postln;
+w=~fenetre.("prout", 200, 249, 100, 87);
 
-w.view.background_(Color.white);
-w.drawFunc = {
-    p.do{ arg i, index;
+~makeScore.(notes, durees, w);
 
-        Pen.color = Color.blue;
-        Pen.addRect(
-			            Rect(i[1], i[0], 20, 20)
-        );
-        Pen.perform( \fill);
-    }
-};
 
-w.refresh;
+)
+*/
+
+~score={
+
+	arg
+	notes, durees,
+	fenetre=(~fenetre.()),
+	echelle=(notes.maxItem + 4);
+
+	var envir=(
+
+		notes:notes,
+		durees: durees,
+		fenetre: fenetre,
+		echelle: echelle,
+		rafraichir: { arg self;
+
+			var partoche, durees, notes,
+			offsetX=0, offsetY=(self.fenetre.bounds.height)/self.echelle;
+
+			// on normalize pour la largeur
+			durees=([0]++self.durees.integrate).normalize(0+offsetX, self.fenetre.bounds.width-offsetX);
+			// on normalise à l'envers pour la hauteur
+			notes=self.notes.linlin(0, self.echelle, self.echelle, 0).linlin(0, self.echelle, 0, self.fenetre.bounds.height-offsetY);
+			// et on match le tout
+			partoche= notes+++ durees;
+			partoche.postln;
+
+			self.fenetre.view.background_(Color.white);
+			self.fenetre.drawFunc = {
+				    partoche.do{ arg i, index;
+
+					        Pen.color = Color.blue;
+					        Pen.addRect(
+						            Rect(i[1], i[0], offsetY, offsetY)
+					        );
+					        Pen.perform( \fill);
+				    }
+			};
+
+			self.fenetre.refresh;
+		}
+	);
+
+	envir.rafraichir;
+	envir;
+}
 )
