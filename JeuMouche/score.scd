@@ -2,8 +2,8 @@
 
 /*
 (
-var notes=Array.rand(4, 1, 8).postln;
-var durees=Array.rand(4, 1, 4).postln;
+var notes=Array.rand(4, 10.1, 8.1).postln;
+var durees=Array.rand(4, 1.1, 4.1).postln;
 a=~score.(notes, durees);
 
 // on peut updater
@@ -11,12 +11,12 @@ a.notes=Array.rand(4, 1, 8).postln;
 a.durees=Array.rand(4, 1, 4).postln;
 a.rafraichir
 
-
+// on peut le coller à une fenêtre dans une UserView
 var notes=Array.rand(4, 1, 8).postln;
 var durees=Array.rand(4, 1, 4).postln;
 w=~fenetre.("prout", 200, 249, 100, 87);
-
-~makeScore.(notes, durees, w);
+x=UserView(w);
+~score.(notes, durees, x);
 
 
 )
@@ -48,13 +48,14 @@ w=~fenetre.("prout", 200, 249, 100, 87);
 			partoche= notes+++ durees;
 			partoche.postln;
 
-			self.fenetre.view.background_(Color.white);
+			self.fenetre.background_(Color.white);
 			self.fenetre.drawFunc = {
 				    partoche.do{ arg i, index;
-
+					var hauteurCarre=offsetY;
+					var longueurCarre=0;
 					        Pen.color = Color.blue;
 					        Pen.addRect(
-						            Rect(i[1], i[0], offsetY, offsetY)
+						            Rect(i[1], i[0], hauteurCarre, hauteurCarre)
 					        );
 					        Pen.perform( \fill);
 				    }
@@ -68,3 +69,10 @@ w=~fenetre.("prout", 200, 249, 100, 87);
 	envir;
 }
 )
+
+
+~grid={
+
+
+}
+
