@@ -29,16 +29,24 @@ x=UserView(w);
 	fenetre=(~fenetre.()),
 	echelle=(notes.maxItem + 4);
 
+	var grille=~grille.(echelle.size, durees.integrate.size, fenetre);
+
 	var envir=(
 
 		notes:notes,
 		durees: durees,
 		fenetre: fenetre,
 		echelle: echelle,
+		grille: grille,
 		rafraichir: { arg self;
+
 
 			var partoche, durees, notes,
 			offsetX=0, offsetY=(self.fenetre.bounds.height)/self.echelle;
+
+			self.fenetre.clearOnRefresh_(false);
+			//on update la grille
+			// self.grille~grill;
 
 			// on normalize pour la largeur
 			durees=([0]++self.durees.integrate).normalize(0+offsetX, self.fenetre.bounds.width-offsetX);
@@ -50,6 +58,9 @@ x=UserView(w);
 
 			self.fenetre.background_(Color.white);
 			self.fenetre.drawFunc = {
+				// on fout une grille
+				self.grille.rafraichir;
+				// on dessine les carrées dessus
 				    partoche.do{ arg i, index;
 					var hauteurCarre=offsetY;
 					var longueurCarre=0;
@@ -69,10 +80,25 @@ x=UserView(w);
 	envir;
 }
 )
-
-
-~grid={
-
-
+a=~score.()
+(
+				// on fout une grille
+				a.grille.rafraichir;
+a.fenetre.drawFunc={
+	Pen.addRect(
+		Rect(20,20,20,20)
+	);
+	Pen.fill;
+	a.grille.rafraichir;
 }
-
+a.fenetre.refresh
+				// on dessine les carrées dessus
+				    partoche.do{ arg i, index;
+					var hauteurCarre=offsetY;
+					var longueurCarre=0;
+					        Pen.color = Color.blue;
+					        Pen.addRect(
+						            Rect(i[1], i[0], hauteurCarre, hauteurCarre)
+					        );
+					        Pen.perform( \fill);
+				    }

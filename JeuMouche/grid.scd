@@ -5,15 +5,24 @@
 // 	resoY (nombre de carrés à la vertical)
 //
 /* 	(
-a=~grid.();
+a=~grille.();
+
+// on change les reso
 a.resoX=20.rand;
 a.resoY=20.rand;
-a.postln;
+
 a.rafraichir;
+
+// on la met dans une userView
+w=~fenetre.("prout", 200, 249, 100, 87);
+x=UserView(w);
+a.fen=x;
+a.rafraichir;
+
 )
 */
 
-~grid={
+~grille={
 
 	arg resoX=10,
 	resoY=10,
