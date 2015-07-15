@@ -34,9 +34,9 @@ x=UserView(w, w.bounds);
 	{	fen	=(UserView(topFen, Rect(0, 0, topFen.view.bounds.width, topFen.view.bounds.height)))}
 	{ fen=topFen};
 
-	var grille=~grille.(echelle, durees.size-1, fen);
+	grille=~grille.(echelle, durees.size-1, fen);
 
-	var envir=(
+	 envir=(
 
 		notes:notes,
 		durees: durees,

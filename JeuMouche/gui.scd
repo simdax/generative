@@ -42,7 +42,7 @@ StaticText(w, 100@50)
 
 (0).wrap(1,12);
 
-// run game
+// start sound
 CheckBox(w)
 .string_( "jouer ?")
 .action_({ |self|
@@ -107,10 +107,10 @@ CheckBox(w)
 			CmdPeriod.run;
 		}
 	)
-
-
-
 });
+
+z=UserView(w, w.bounds.width@w.bounds.height/5);
+~score.([0, 2, 3],[1, 1, 1],z)
 
 
 )
