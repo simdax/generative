@@ -1,65 +1,60 @@
-~animatedScore
+/*
+~animatedScore.()
 
-a.fenetre
-
-//surcharge de score pour faire une petite barre qui défile
+*/
 (
-
-var obj={
-var tempo=TempoClock.tempo;
-
-var envir=(
-tempo: tempo,
-
-		barreQuiBouge: {arg self;
-			self.notes.postln
-		}
-
-	);
-
-envir.parent=~score.();
-};
-
-a=obj.();
-
-
-)
-
-
-(
+~animatedScore={ |vue|
 
 var matrix = [1, 0, 0, 1, 0, 0];
 
+	if (vue.isNil)
+{w=Window.new
+.layout_(
+	VLayout(
+		UserView(),
+		UserView()
+	)
+)
+		.front;}
+	{w=vue};
 
-w=~fenetre.();
-
-
-x=UserView(w, Rect(0,0,w.bounds.width,w.bounds.height/2));
-z=UserView(w, w.bounds);
-~score.([0,1,2,3], [1,1,2,1], topFen:x);
-
-
-
-z.drawFunc= {
+a=~score.([0,1,2,3], [1,1,2,1], topFen:w.view.children[0]);
+b=w.view.children[1];
+b.drawFunc= {
 	Pen.matrix = matrix;
 	Pen.strokeColor=Color.red;
-	Pen.line(0@0, 0@z.bounds.height);
+	Pen.line(0@0, 0@b.bounds.height);
 	Pen.stroke
 };
 
- {
-	var largeur=w.bounds.width;
-	var temps=15000; // ça met environ 10 secondes
-	var refreshTime=(largeur/temps).postln;
 
- 	largeur.do{ |i|
- 		matrix.put(4, i);
+CheckBox(w, 50@50)
+.string_("go ??")
+.action_({ |self|
+	{
+		var largeur=w.bounds.width;
+		var temps=a.durees.integrate.last;
+		var refreshTime=(temps/largeur).postln;
 
- 		z.refresh;
- 		refreshTime.wait
- 	}
- }.fork(AppClock);
+		largeur.do{ |i|
+			matrix.put(4, i);
+			b.refresh;
+			refreshTime.wait
+		}
+	}.fork(AppClock);
 
+	Pfset( {},
+		Pbind(
+		\degree, Pseq(a.notes),
+		\dur, Pseq(a.durees)
+		),
+		{
+			{self.value_(false)}.defer
+		}
+
+	).play
+});
+}
 
 )
 
