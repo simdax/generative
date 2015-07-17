@@ -61,13 +61,17 @@ a=~animatedScore.(w);
 			Pfset( {},
 				Pbindef(\patAScore,
 					\degree, Pseq(a.notes),
-					\dur, Pseq(a.durees)
+					\dur, Pseq(a.durees),
+							//\stretch, 0.2
 				),
 				{
 					{self.value_(false)}.defer
 				}
 
-			).play;
+			).collect({ arg ev;
+						~event = ev;
+					})
+					.play;
 				},
 				false, {
 					CmdPeriod.run;

@@ -21,7 +21,7 @@ nbJoueurs.do({ |i|
 	['x'].do({ arg pos, indexPos;
 		nbJoueurs.do ({ arg joueur;
 
-			OSCdef.newMatching(("joueur"++joueur++"accelerometre"++pos).asSymbol,
+	/*		OSCdef.newMatching(("joueur"++joueur++"accelerometre"++pos).asSymbol,
 				{
 					arg msg;
 
@@ -29,23 +29,68 @@ nbJoueurs.do({ |i|
 					var freqBase=(60).midicps;
 					// on change la freq avec la position
 					var modulation=
+
+
+
+
+
 					Scale.major.degreeToFreq(
 						(msg[1]).round(0.5)*2,
 						freqBase,
 						1)
 					;
-					~accords[joueur][indexPos].set(\freq, modulation);
-					~iphone=modulation.cpsmidi.ceil.asInt;
+				//	~accords[joueur][indexPos].set(\freq, modulation);
+					~iphoneAcc=modulation.cpsmidi.ceil.asInt;
 					// update BOX
 					{
-						~boxFreqUser.value_(~iphone);
+						~boxFreqUser.value_(~iphoneAcc);
 					}.defer;
 
 
 				},
 				("/aOSC/acc/"++pos).asSymbol, recvPort:( 57120 + joueur)
-			);
-		})
+			);*/
+
+		OSCdef.newMatching(("joueur"++joueur++"gyroscope"++pos).asSymbol,
+				{
+					arg msg;
+
+					// note de base
+					var freqBase=(60).midicps;
+
+
+
+					// on change la freq avec la position
+					// ici tout dépend de l'échelle qu'on va utiliser
+					// en l'occurence l'échelle majeure, c'est bien, mais
+					// on pourrait imaginer que quelqu'un change d'échelle
+					// avec un coup à droite
+
+
+					var modulation=
+
+					Scale.major.degreeToFreq(
+						(msg[1]).round(2)/10,
+						freqBase,
+						1)
+					;
+
+					modulation.postln;
+
+					~accords[joueur][indexPos].set(\freq, modulation);
+					~iphoneGyr=modulation.cpsmidi.ceil.asInt;
+					// update BOX
+					{
+						~boxFreqUser.value_(~iphoneGyr);
+					}.defer;
+
+				},
+				("/aOSC/gyro/"++pos).asSymbol, recvPort:( 57120 + joueur)
+
+
+		);
+
+	})
 
 	});
 };

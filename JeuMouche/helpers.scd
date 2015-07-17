@@ -11,6 +11,9 @@ OSCFunc.trace(false)
 thisProcess.openPorts
 
 OSCdef.all.collect(_.path)
+
+
+
 NetAddr.broadcastIP
 s.plotTree
 (Pdef.all.collect({ |i|

@@ -1,35 +1,11 @@
-(
-var run=false;
-var fps=0.5;
-
-w=~fenetre.();
-a=~animatedScore.();
-
-
-Button(w, 50@50)
-.action_({
-	run=run.if {false} {true};
-});
-
-r {
-	loop{
-		var notes, dur;
-		notes=Array.rand( (1..5).choose, 0,6).postln;
-		dur=notes.size ! 1;
-		a.score.notes=notes;
-		a.score.durees=(1!a.score.notes.size); // pour l'instant on se complique pas la vie
-		a.score.rafraichir;
-		a.run;
-	}
-}.play;
-
-w.onClose_(
-	Pdef(\a).stop
-);
-)
-
 
 (
+
+var tsInter=0; // pour la classe
+
+
+
+
 //setup
 Window.closeAll;
 "jeumouche.scd".loadRelative;
@@ -39,7 +15,7 @@ Window.closeAll;
 w=Window.new.alwaysOnTop_(true).front;
 w.addFlowLayout;
 
-Pdef(\a).play
+//Pdef(\a).play
 
 // background melody
 
@@ -78,16 +54,11 @@ CheckBox(w)
 	if( self.value,
 		{
 			(~iphone.isNil).if {~iphone=69};
-			Pdef(\a)
-			.collect({ |ev|
-				~event=ev
-			})
-			.play(quant:[0, 0, 0]);
 			~run.();
 			TempoClock.sched(0.1, {
 				r{ loop{
 					var freqMel=~event[\freq].cpsmidi.ceil.asInt;
-					var freqIphone=~iphone.postln;
+					var freqIphone=~iphoneGyr;
 					var stringResult=(freqIphone-freqMel).asInt
 					.wrap(0,12);
 					var intervalle=
@@ -127,6 +98,15 @@ CheckBox(w)
 							{~boxResult.stringColor_(Color.green)};
 						}.value;
 					}.defer;
+
+					{
+						if ((intervalle == c.string))
+						{tsInter=tsInter+1; }
+						;
+						d.string_(tsInter);
+					}.defer;
+
+
 					0.2.wait;
 				}}.play
 			});
@@ -135,13 +115,65 @@ CheckBox(w)
 			Pdef(\a).stop;
 			CmdPeriod.run;
 		}
-	)
+	);
+
+});
+
+f=
+{
+	var notes, dur;
+	notes=Array.rand( (1..5).choose, 0,6).postln;
+	dur= {(2, 2.5..5).choose} !  notes.size ;
+	a.score.notes=notes;
+	a.score.durees=dur; // pour l'instant on se complique pas la vie
+	a.score.rafraichir;
+	a.run;
+};
+
+a=~animatedScore.();
+b=Button(w, 50@50)
+.action_({
+	// run=run.if {false} {true};
+	{
+		loop
+		{
+
+			f.value;
+			c.string_({
+				arg stringResult;
+				switch(stringResult,
+					0, "unisson",
+					1, "demi-ton",
+					2, "ton",
+					3, "tierce mineure",
+					4, "tierce majeure",
+					5, "quarte",
+					6, "triton",
+					7, "quinte",
+					8, "sixte mineure",
+					9, "sixte",
+					10, "septième",
+					11, "sensible",
+					12, "octave"
+				)
+			}.(().choose));
+			a.score.durees.integrate.last.wait;
+		}
+	}.fork(AppClock)
 });
 
 
-~animatedScore.();
+StaticText(w, 120@50)
+.string_("intervalle à atteindre")
+;
 
+c=StaticText(w, 100@100)
+.string_("...")
+.background_(Color.grey)
+;
+
+d=StaticText(w, 50@50)
+.string_(tsInter);
 
 )
 
-Pdefn(\degree).source
