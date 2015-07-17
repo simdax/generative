@@ -38,7 +38,7 @@ StaticText(w, 100@50)
 w.view.decorator.nextLine;
 
 StaticText(w, 100@50)
-.string_("intervalle : ")
+.string_("intervalle actuel : ")
 ;
 ~boxResult=StaticText(w, 100@50)
 .string_("...")
@@ -84,23 +84,18 @@ CheckBox(w)
 						~boxResult
 						.string_(intervalle);
 						{
+							var couleur = (
+								if(c.object.includesEqual(intervalle))
+									{Color.white}
+									{Color.red};
+							);
 							var st=~boxResult.string;
-							case
-							{["quinte", "quarte", "unisson", "octave"].includesEqual(st)}
-							{~boxResult.stringColor_(Color.yellow)}
-							{["tierce majeure", "sixte"].includesEqual(st)}
-							{~boxResult.stringColor_(Color.red)}
-							{["tierce mineure", "sixte mineure"].includesEqual(st)}
-							{~boxResult.stringColor_(Color.blue)}
-							{["sensible", "demi-ton"].includesEqual(st)}
-							{~boxResult.stringColor_(Color.black)}
-							{["ton", "septième"].includesEqual(st)}
-							{~boxResult.stringColor_(Color.green)};
+							~boxResult.stringColor_(	couleur	)
 						}.value;
 					}.defer;
 
 					{
-						if ((intervalle == c.string))
+						if (c.object.includesEqual(intervalle))
 						{tsInter=tsInter+1; }
 						;
 						d.string_(tsInter);
@@ -122,8 +117,13 @@ CheckBox(w)
 f=
 {
 	var notes, dur;
-	notes=Array.rand( (1..5).choose, 0,6).postln;
+	notes=Array.rand( (1..5).choose, 0,6);
 	dur= {(2, 2.5..5).choose} !  notes.size ;
+
+	//ici on augmente la vitesse selon le nombre de points
+	dur=dur.linlin(0, 5, 0, 5-(tsInter/100));
+	dur.postln;
+
 	a.score.notes=notes;
 	a.score.durees=dur; // pour l'instant on se complique pas la vie
 	a.score.rafraichir;
@@ -139,9 +139,10 @@ b=Button(w, 50@50)
 		{
 
 			f.value;
-			c.string_({
+			c.object_({
 				arg stringResult;
-				switch(stringResult,
+				stringResult.collect(
+				switch( _ ,
 					0, "unisson",
 					1, "demi-ton",
 					2, "ton",
@@ -156,7 +157,8 @@ b=Button(w, 50@50)
 					11, "sensible",
 					12, "octave"
 				)
-			}.(().choose));
+				)
+			}.([0, 7, 12]));
 			a.score.durees.integrate.last.wait;
 		}
 	}.fork(AppClock)
@@ -164,7 +166,7 @@ b=Button(w, 50@50)
 
 
 StaticText(w, 120@50)
-.string_("intervalle à atteindre")
+.string_("intervalle(s) possible(s)")
 ;
 
 c=StaticText(w, 100@100)

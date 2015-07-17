@@ -64,7 +64,7 @@ b=~grille.(topFen:x)
 				Pen.stroke;
 			};
 
-				longCarre.postln; hautCarre.postln;
+			//	longCarre.postln; hautCarre.postln;
 
 			// et on trace
 			self.resoX.do({|i|

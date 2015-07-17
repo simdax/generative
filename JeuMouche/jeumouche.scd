@@ -75,7 +75,7 @@ nbJoueurs.do({ |i|
 						1)
 					;
 
-					modulation.postln;
+
 
 					~accords[joueur][indexPos].set(\freq, modulation);
 					~iphoneGyr=modulation.cpsmidi.ceil.asInt;

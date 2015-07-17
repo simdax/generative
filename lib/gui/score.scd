@@ -60,7 +60,7 @@ x=UserView(w, w.bounds);
 			notes=self.notes.linlin(0, self.echelle, self.echelle, 0).linlin(0, self.echelle, 0, self.fenetre.bounds.height-offsetY);
 			// et on match le tout
 			partoche= notes+++ durees;
-			partoche.postln;
+			partoche;
 
 			// self.fenetre.background_(Color.white);
 			self.fenetre.drawFunc = FunctionList.addFunc (
