@@ -14,12 +14,20 @@ if (a.includes(true), {thisProcess.recompile});
 
 )
 
+// INSTALL CLASSES
 (
+var classes=PathName("../quark/".resolveRelative).files;
+var extDir=PathName(Platform.userExtensionDir+/+"test/").absolutePath;
 
-var string=Platform.userExtensionDir+/+"test/";
 
-File.exists(string).if {} {File.mkdir(string)};
-File.copy("../quark/test.scd".resolveRelative, string++"test.sc")
+if ( File.exists(extDir) ) {} {File.mkdir(extDir)};
+classes.collect({ arg i;
+	j=extDir+/+(i.fileName.replace("scd", "sc")).postln;
+	if(File.exists(j))
+	{}
+	{File.copy(i.absolutePath, (extDir+/+j).absolutePath)}
+});
+
 )
 
 
