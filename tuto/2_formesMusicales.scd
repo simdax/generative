@@ -242,4 +242,4 @@ Pbindef(\harmo,
 Pbindef(\mel,
 	\degree, Pseq([0,1,2,3]))
 )
-// bienvenue dans le monde de la folie :)
+

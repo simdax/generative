@@ -32,6 +32,10 @@ result=result.select({ arg i;
 }).postln;
 
 ("il y a "+result.size+"probleme(s)").postln;
+if(result.size > 0) {
+	"c'est dans".post ;
+	listeDossiers.atAll(result.select({ |i| i.isNil}))
+} {"tchiop"};
 
 )
 //ACTIVER LE MIDI

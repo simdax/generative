@@ -1,4 +1,35 @@
 (
+var run=false;
+var fps=0.5;
+
+w=~fenetre.();
+a=~animatedScore.();
+
+
+Button(w, 50@50)
+.action_({
+	run=run.if {false} {true};
+});
+
+r {
+	loop{
+		var notes, dur;
+		notes=Array.rand( (1..5).choose, 0,6).postln;
+		dur=notes.size ! 1;
+		a.score.notes=notes;
+		a.score.durees=(1!a.score.notes.size); // pour l'instant on se complique pas la vie
+		a.score.rafraichir;
+		a.run;
+	}
+}.play;
+
+w.onClose_(
+	Pdef(\a).stop
+);
+)
+
+
+(
 //setup
 Window.closeAll;
 "jeumouche.scd".loadRelative;
@@ -8,12 +39,10 @@ Window.closeAll;
 w=Window.new.alwaysOnTop_(true).front;
 w.addFlowLayout;
 
+Pdef(\a).play
+
 // background melody
-Pdef(\a,
-	Pbind(
-		\degree, Prand([0,1,2,4,5], inf),
-		\dur, Prand([1,3,5,7], inf),
-));
+
 
 // IP informations
 StaticText(w, 200@100)
@@ -56,50 +85,50 @@ CheckBox(w)
 			.play(quant:[0, 0, 0]);
 			~run.();
 			TempoClock.sched(0.1, {
-			r{ loop{
-				var freqMel=~event[\freq].cpsmidi.ceil.asInt;
-				var freqIphone=~iphone.postln;
-				var stringResult=(freqIphone-freqMel).asInt
-				.wrap(0,12);
-				var intervalle=
-				switch(stringResult,
-					0, "unisson",
-					1, "demi-ton",
-					2, "ton",
-					3, "tierce mineure",
-					4, "tierce majeure",
-					5, "quarte",
-					6, "triton",
-					7, "quinte",
-					8, "sixte mineure",
-					9, "sixte",
-					10, "septième",
-					11, "sensible",
-					12, "octave"
-				);
+				r{ loop{
+					var freqMel=~event[\freq].cpsmidi.ceil.asInt;
+					var freqIphone=~iphone.postln;
+					var stringResult=(freqIphone-freqMel).asInt
+					.wrap(0,12);
+					var intervalle=
+					switch(stringResult,
+						0, "unisson",
+						1, "demi-ton",
+						2, "ton",
+						3, "tierce mineure",
+						4, "tierce majeure",
+						5, "quarte",
+						6, "triton",
+						7, "quinte",
+						8, "sixte mineure",
+						9, "sixte",
+						10, "septième",
+						11, "sensible",
+						12, "octave"
+					);
 
-				// actualisation des boxes
-				{
-					~boxFreqMel.value_(freqMel);
-					~boxResult
-					.string_(intervalle);
+					// actualisation des boxes
 					{
-						var st=~boxResult.string;
-						case
-						{["quinte", "quarte", "unisson", "octave"].includesEqual(st)}
-						{~boxResult.stringColor_(Color.yellow)}
-						{["tierce majeure", "sixte"].includesEqual(st)}
-						{~boxResult.stringColor_(Color.red)}
-						{["tierce mineure", "sixte mineure"].includesEqual(st)}
-						{~boxResult.stringColor_(Color.blue)}
-						{["sensible", "demi-ton"].includesEqual(st)}
-						{~boxResult.stringColor_(Color.black)}
-						{["ton", "septième"].includesEqual(st)}
-						{~boxResult.stringColor_(Color.green)};
-					}.value;
-				}.defer;
-				0.2.wait;
-			}}.play
+						~boxFreqMel.value_(freqMel);
+						~boxResult
+						.string_(intervalle);
+						{
+							var st=~boxResult.string;
+							case
+							{["quinte", "quarte", "unisson", "octave"].includesEqual(st)}
+							{~boxResult.stringColor_(Color.yellow)}
+							{["tierce majeure", "sixte"].includesEqual(st)}
+							{~boxResult.stringColor_(Color.red)}
+							{["tierce mineure", "sixte mineure"].includesEqual(st)}
+							{~boxResult.stringColor_(Color.blue)}
+							{["sensible", "demi-ton"].includesEqual(st)}
+							{~boxResult.stringColor_(Color.black)}
+							{["ton", "septième"].includesEqual(st)}
+							{~boxResult.stringColor_(Color.green)};
+						}.value;
+					}.defer;
+					0.2.wait;
+				}}.play
 			});
 		},
 		{
@@ -109,9 +138,10 @@ CheckBox(w)
 	)
 });
 
-z=UserView(w, w.bounds.width@w.bounds.height/5);
-~score.([0, 2, 3],[1, 1, 1],z)
+
+~animatedScore.();
 
 
 )
 
+Pdefn(\degree).source
