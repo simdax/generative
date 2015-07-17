@@ -1,4 +1,7 @@
+Quarks.install("https://github.com/supercollider-quarks/UnitTesting.git");
+Quarks.install("https://github.com/supercollider-quarks/downloaded-quarks.git")
 
+Quarks.gui
 (
 
 var tsInter=0; // pour la classe

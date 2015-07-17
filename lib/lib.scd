@@ -14,6 +14,15 @@ if (a.includes(true), {thisProcess.recompile});
 
 )
 
+(
+
+var string=Platform.userExtensionDir+/+"test/";
+
+File.exists(string).if {} {File.mkdir(string)};
+File.copy("../quark/test.scd".resolveRelative, string++"test.sc")
+)
+
+
 //ACTIVER LA LIB
 
 (
