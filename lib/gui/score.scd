@@ -1,14 +1,20 @@
 (
-
 /*
 (
-var notes=Array.rand(4, 10.1, 8.1).postln;
-var durees=Array.rand(4, 1.1, 4.1).postln;
+~score.();
+
+var notes=Array.rand(4, 1, 8).postln;
+var durees=Array.rand(4, 1, 4).postln;
 a=~score.(notes, durees);
 
 // on peut updater
-a.notes=Array.rand(4, 1, 8).postln;
-a.durees=Array.rand(4, 1, 4).postln;
+a.notes=Array.rand(4, 10, 8).postln;
+a.durees=Array.rand(4, 1.1, 4.1).postln;
+a.rafraichir
+
+//on peut changer la grille en Y
+
+a.grille.resoY=0;
 a.rafraichir
 
 // on peut le coller à une fenêtre dans une autre Fenetre
@@ -25,9 +31,10 @@ x=UserView(w, w.bounds);
 ~score={
 
 	arg
-	notes=(0!1), durees=(0!1),
+	notes=Array.rand(5, 0, 7),
+	durees=(2! notes.size),
 	topFen=(~fenetre.()),
-	echelle=(notes.maxItem + 4);
+	echelle=10;
 
 	var fen, envir, grille;
 	if (topFen.class==Window)
@@ -46,22 +53,39 @@ x=UserView(w, w.bounds);
 		rafraichir: { arg self;
 
 
-			var partoche, durees, notes,
-			offsetX=0, offsetY=(self.fenetre.bounds.height)/self.echelle;
-
+			var partoche, points, durees, notes,
+			//hauteurCarre=20, longueurCarre=20,
+			offsetX=0, offsetY=0;
+			//(self.fenetre.bounds.height)/self.echelle;
 
 			//on update la grille
 			self.grille.resoX=self.echelle;
-			self.grille.resoY=self.durees.size-1;
+			// self.grille.resoY=self.durees.size-1;
 
 			// on normalize pour la largeur
-			durees=([0]++self.durees.integrate).normalize(0+offsetX, self.fenetre.bounds.width-offsetX);
+			points=([0]++self.durees.integrate)
+			.normalize(0+offsetX, self.fenetre.bounds.width-offsetX)
+			//.postln
+			;
+
+			durees=(points.size-1).collect({|i|
+				points[i+1]-points[i]
+			})
+			//.postln
+			;
+
 			// on normalise à l'envers pour la hauteur
-			notes=self.notes.linlin(0, self.echelle, self.echelle, 0).linlin(0, self.echelle, 0, self.fenetre.bounds.height-offsetY);
+			notes=self.notes
+			.linlin(0, self.echelle, self.echelle, 0)
+			.linlin(0, self.echelle, 0, self.fenetre.bounds.height-offsetY)
+			.postln
+			;
+
 			// et on match le tout
-			partoche= notes+++ durees;
+			partoche= notes+++ points +++durees;
 			partoche;
 
+			// ON DESSINE
 			// self.fenetre.background_(Color.white);
 			self.fenetre.drawFunc = FunctionList.addFunc (
 				// on fout une grille
@@ -69,11 +93,10 @@ x=UserView(w, w.bounds);
 				// on dessine les carrées dessus
 				    {
 					partoche.do{ arg i, index;
-					var hauteurCarre=offsetY;
-					var longueurCarre=0;
-					        Pen.color = Color.blue;
+					var hauteurCarre=self.grille.longueurCarre;
+					        Pen.color = Color.rand;
 					        Pen.addRect(
-						            Rect(i[1], i[0], hauteurCarre, hauteurCarre)
+							Rect(i[1], i[0], i[2], hauteurCarre)
 					        );
 					        Pen.fill;
 				}},

@@ -1,12 +1,6 @@
-Quarks.install("https://github.com/supercollider-quarks/UnitTesting.git");
-Quarks.install("https://github.com/supercollider-quarks/downloaded-quarks.git")
-
-Quarks.gui
 (
 
 var tsInter=0; // pour la classe
-
-
 
 
 //setup
@@ -129,18 +123,24 @@ f=
 
 	a.score.notes=notes;
 	a.score.durees=dur; // pour l'instant on se complique pas la vie
+	a.score.grille.resoY=0;
+	a.score.grille.rafraichir;
 	a.score.rafraichir;
 	a.run;
 };
 
-a=~animatedScore.();
-b=Button(w, 50@50)
-.action_({
-	// run=run.if {false} {true};
+a=~animatedScore.(/*[0], [0]*/);
+b=Button(w, 150@50)
+.states_([
+	["mettre en marche?"],
+	["stop ?"]
+])
+.action_({ |self|
+	switch(self.value,
+		1, {
 	{
 		loop
 		{
-
 			f.value;
 			c.object_({
 				arg stringResult;
@@ -165,6 +165,10 @@ b=Button(w, 50@50)
 			a.score.durees.integrate.last.wait;
 		}
 	}.fork(AppClock)
+		},
+		0,
+		{a.stop}
+	);
 });
 
 

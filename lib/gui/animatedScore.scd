@@ -2,8 +2,10 @@
 
 (
 ~animatedScore.()
+
 w=~fenetre.();
 a=~animatedScore.(w);
+a.peuplerScore([1,2,3], [1,2,3,1]);
 )
 
 */
@@ -23,7 +25,7 @@ a=~animatedScore.(w);
 
 	matrix= [1, 0, 0, 1, 0, 0];
 	 b=vue.view.children[1];
-	 a=~score.([0,1,2,3], [1,1,2,1], topFen:vue.view.children[0]);
+	a=~score.([0], [0], topFen:vue.view.children[0]);
 
 
 	b.drawFunc= {
@@ -38,6 +40,13 @@ a=~animatedScore.(w);
 		matrix: matrix,
 
 		score:a,
+		peuplerScore: {|self, notes, durees|
+			self.score.notes=notes;
+			self.score.durees=durees;
+			self.score.rafraichir;
+		},
+
+
 		barre:b,
 
 		box:
@@ -62,7 +71,6 @@ a=~animatedScore.(w);
 				Pbindef(\patAScore,
 					\degree, Pseq(a.notes),
 					\dur, Pseq(a.durees),
-							//\stretch, 0.2
 				),
 				{
 					{self.value_(false)}.defer
@@ -82,8 +90,11 @@ a=~animatedScore.(w);
 		}),
 
 		run: { |self|
-
 			self.box.valueAction_(true)
+		},
+
+		stop: { |self|
+			self.box.valueAction_(0)
 		}
 
 

@@ -8,7 +8,7 @@
 a=~grille.();
 // on change les reso
 a.resoX=20.rand;
-a.resoY=20.rand;
+a.resoY=0;
 a.postln;
 a.rafraichir;
 
@@ -25,8 +25,8 @@ b=~grille.(topFen:x)
 
 ~grille={
 
-	arg resoX=10,
-	resoY=10,
+	arg resoX=5,
+	resoY=5,
 	topFen=(~fenetre.());
 
 	var fen, envir;
@@ -39,6 +39,13 @@ b=~grille.(topFen:x)
 		resoX:resoX,
 		resoY:resoY,
 		fen:fen,
+		longueurCarre:{|self|
+			self.fen.bounds.height/self.resoX;
+		},
+		hauteurCarre:{|self|
+			self.fen.bounds.width/self.resoY;
+		},
+
 
 		topFen:{ arg self, top;
 			self.fen=UserView(top, Rect(0, 0, top.bounds.width, top.bounds.height));
@@ -47,8 +54,8 @@ b=~grille.(topFen:x)
 
 		func: {arg self;
 			{
-			var longCarre=self.fen.bounds.height/self.resoX;
-			var hautCarre=self.fen.bounds.width/self.resoY;
+			var longCarre=self.longueurCarre;
+			var hautCarre=self.hauteurCarre;
 
 			var horizontal={
 				arg nbIter;
@@ -64,7 +71,6 @@ b=~grille.(topFen:x)
 				Pen.stroke;
 			};
 
-			//	longCarre.postln; hautCarre.postln;
 
 			// et on trace
 			self.resoX.do({|i|
