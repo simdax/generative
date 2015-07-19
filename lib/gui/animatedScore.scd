@@ -6,6 +6,8 @@
 w=~fenetre.();
 a=~animatedScore.(w);
 a.peuplerScore([1,2,3], [1,2,3,1]);
+a.run
+a.arret
 )
 
 */
@@ -93,7 +95,7 @@ a.peuplerScore([1,2,3], [1,2,3,1]);
 			self.box.valueAction_(true)
 		},
 
-		stop: { |self|
+		arret: { |self|
 			self.box.valueAction_(0)
 		}
 

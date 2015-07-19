@@ -167,7 +167,7 @@ b=Button(w, 150@50)
 	}.fork(AppClock)
 		},
 		0,
-		{a.stop}
+		{a.arret}
 	);
 });
 
