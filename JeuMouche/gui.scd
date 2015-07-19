@@ -51,7 +51,7 @@ CheckBox(w)
 	if( self.value,
 		{
 			(~iphone.isNil).if {~iphone=69};
-			~run.();
+			~run.(\mouse);
 			TempoClock.sched(0.1, {
 				r{ loop{
 					var freqMel=~event[\freq].cpsmidi.ceil.asInt;

@@ -1,9 +1,13 @@
 (
 
 // faire un petit grillage configurable
+
 // resoX (nombre de carrés à l'horizontal)
 // 	resoY (nombre de carrés à la vertical)
+
 //
+
+
 /* 	(
 a=~grille.();
 // on change les reso
@@ -11,6 +15,8 @@ a.resoX=20.rand;
 a.resoY=0;
 a.postln;
 a.rafraichir;
+
+a.hauteurCarre.postln
 
 // on la met dans une userView
 w=~fenetre.("prout", 350, 200, 100, 87);
@@ -45,7 +51,6 @@ b=~grille.(topFen:x)
 		hauteurCarre:{|self|
 			self.fen.bounds.width/self.resoY;
 		},
-
 
 		topFen:{ arg self, top;
 			self.fen=UserView(top, Rect(0, 0, top.bounds.width, top.bounds.height));

@@ -8,7 +8,7 @@ var durees=Array.rand(4, 1, 4).postln;
 a=~score.(notes, durees);
 
 // on peut updater
-a.notes=Array.rand(4, 10, 8).postln;
+a.notes=Array.rand(4, 0, 8).postln;
 a.durees=Array.rand(4, 1.1, 4.1).postln;
 a.rafraichir
 
@@ -76,9 +76,9 @@ x=UserView(w, w.bounds);
 
 			// on normalise à l'envers pour la hauteur
 			notes=self.notes
-			.linlin(0, self.echelle, self.echelle, 0)
-			.linlin(0, self.echelle, 0, self.fenetre.bounds.height-offsetY)
-			.postln
+			.linlin(0, self.echelle-1, self.echelle-1, 0) // on renverse
+			.linlin(0, self.echelle-1, 0, (self.fenetre.bounds.height-self.grille.longueurCarre).postln)
+			//.postln
 			;
 
 			// et on match le tout
@@ -109,3 +109,6 @@ x=UserView(w, w.bounds);
 	envir;
 }
 )
+
+[0,1,2,3,4,5,6,7,8,9].linlin(0,9,9,0).linlin(0,9,0,450)
+

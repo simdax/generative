@@ -5,7 +5,7 @@
 
 w=~fenetre.();
 a=~animatedScore.(w);
-a.peuplerScore([1,2,3], [1,2,3,1]);
+a.peuplerScore([0,1,2,3], [1,2,3,1]);
 a.run
 a.arret
 )
