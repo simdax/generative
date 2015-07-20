@@ -21,6 +21,7 @@ nbJoueurs.do({ |i|
 	['x'].do({ arg pos, indexPos;
 		nbJoueurs.do ({ arg joueur;
 
+			// note de base
 			var freqBase=(60).midicps;
 
 			switch(symbol,
@@ -33,7 +34,6 @@ nbJoueurs.do({ |i|
 					{
 					arg msg;
 
-					// note de base
 					var freqBase=(60).midicps;
 					// on change la freq avec la position
 					var modulation=
@@ -59,9 +59,6 @@ nbJoueurs.do({ |i|
 						{
 							arg msg;
 
-							// note de base
-
-
 
 							// on change la freq avec la position
 							// ici tout dépend de l'échelle qu'on va utiliser
@@ -77,8 +74,6 @@ nbJoueurs.do({ |i|
 								freqBase,
 								1)
 							;
-
-
 
 							~accords[joueur][indexPos].set(\freq, modulation);
 							~iphoneGyr=modulation.cpsmidi.ceil.asInt;
@@ -97,27 +92,26 @@ nbJoueurs.do({ |i|
 
 
 				'mouse', {
-					{
-						var souris=MouseX.kr * 7;
-						var modulation=
-						Scale.major.degreeToFreq(
-							souris,
-							freqBase,
-							1)
-						;
+					var modulation;
 
-						~accords[joueur][indexPos].set(\freq, modulation);
-						~iphoneGyr=modulation.cpsmidi.ceil.asInt;
-						{
-							~boxFreqUser.value_(~iphoneGyr);
-						}.defer;
-
-					}
+					r{
+						loop{
+							{~souris=Platform.getMouseCoords.y.postln}.defer;
+							modulation=Scale.major.degreeToFreq(
+								~souris/100,
+								freqBase,
+								1);
+							~accords[joueur][indexPos].set(\freq, modulation);
+							~iphoneGyr=modulation.cpsmidi.ceil.asInt;
+							{
+								~boxFreqUser.value_(~iphoneGyr);
+							}.defer;
+							0.1.wait
+						}
+					}.play;
 				}
 			)
-
 		});
 	});
 };
 )
-

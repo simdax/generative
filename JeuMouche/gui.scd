@@ -44,14 +44,21 @@ StaticText(w, 100@50)
 
 (0).wrap(1,12);
 
-// start sound
+
+
+/////////////
+
+
+// start sound device (iphone, mouse)
+
 CheckBox(w)
 .string_( "jouer ?")
 .action_({ |self|
 	if( self.value,
 		{
+			var symbol=\mouse;
 			(~iphone.isNil).if {~iphone=69};
-			~run.(\mouse);
+			~run.(symbol);
 			TempoClock.sched(0.1, {
 				r{ loop{
 					var freqMel=~event[\freq].cpsmidi.ceil.asInt;
@@ -77,6 +84,7 @@ CheckBox(w)
 
 					// actualisation des boxes
 					{
+						// petites boxes du haut
 						~boxFreqMel.value_(freqMel);
 						~boxResult
 						.string_(intervalle);
@@ -89,15 +97,24 @@ CheckBox(w)
 							var st=~boxResult.string;
 							~boxResult.stringColor_(	couleur	)
 						}.value;
-					}.defer;
 
-					{
+
+					// le slider
+
+					~sliderSouris.value_(
+						if (symbol == 'mouse')
+						{~souris.linlin(0, 800, 0,1)}
+						{"pas la souris".postln}
+					);
+
+					// les points
+
 						if (c.object.includesEqual(intervalle))
 						{tsInter=tsInter+1; }
 						;
 						d.string_(tsInter);
-					}.defer;
 
+					}.defer;
 
 					0.2.wait;
 				}}.play
@@ -110,6 +127,9 @@ CheckBox(w)
 	);
 
 });
+
+///////
+
 
 f=
 {
@@ -170,6 +190,11 @@ b=Button(w, 150@50)
 		{a.arret}
 	);
 });
+
+~sliderSouris=Slider(w, 20 @ 150);
+
+
+///// infos joueurs
 
 
 StaticText(w, 120@50)

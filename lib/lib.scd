@@ -1,33 +1,34 @@
 // AU BESOIN INSTALLER LES DEPENDANCES
 Quarks.gui
 
-(
-
-var listeQuarks = ["TabbedView2"];
-
-a=listeQuarks.collect({ |i|
-	(Quarks.isInstalled(i)).not.if
-	{Quarks.install(i) ; true };
-});
-
-if (a.includes(true), {thisProcess.recompile});
-
-)
 
 // INSTALL CLASSES
+/*
+~install.("init.scd")
+*/
+
 (
-var classes=PathName("../quark/".resolveRelative).files;
-var extDir=PathName(Platform.userExtensionDir+/+"test/").absolutePath;
+~install={ arg p;
+
+	var path=p.[0..p.find(".")-1].postln,
+	classes=("../quark/".resolveRelative +/+ p).postln,
+	extDir=(Platform.userExtensionDir+/+path).absolutePath.postln;
+	if ( File.exists(extDir) )
+	{"existe deja".postln;}
+	{File.mkdir(extDir)};
+	{
+		var	j=(extDir+/+path++".sc").postln;
+		if(File.exists(j))
+		{File.delete(j)} {"preums".postln;};
+		File.copy(classes.asString, j);
+	}.value;
+};
+
+~uninstall={ arg path;
 
 
-if ( File.exists(extDir) ) {} {File.mkdir(extDir)};
-classes.collect({ arg i;
-	j=extDir+/+(i.fileName.replace("scd", "sc")).postln;
-	if(File.exists(j))
-	{}
-	{File.copy(i.absolutePath, (extDir+/+j).absolutePath)}
-});
 
+};
 )
 
 
@@ -40,9 +41,9 @@ var paths=listeDossiers.collect({ |i|
 	root++i++"/main.scd"
 });
 
-var result=paths.collect(
-this.executeFile(_);
-);
+var result=paths.collect({ |i|
+this.executeFile(i);
+});
 
 result=result.select({ arg i;
 	i.isNil

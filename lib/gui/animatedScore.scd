@@ -31,9 +31,11 @@ a.arret
 
 
 	b.drawFunc= {
+		var offset=(-20);
+
 		Pen.matrix = matrix;
 		Pen.strokeColor=Color.red;
-		Pen.line(0@0, 0@b.bounds.height);
+		Pen.line(offset@0, offset@b.bounds.height);
 		Pen.stroke
 	};
 

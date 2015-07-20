@@ -1,33 +1,46 @@
 /*
 
-~getBuffers.()
-"jkljk".postln
+~getBuffers.("/home/simdax/freesound/drum")
+~lbuf.()
 ~playAllBuffers.()
 */
+
 (
-~getBuffers= { |path="/home/simdax/Freesound/snd"|
+
+~buffers=Dictionary.new;
+
+~getBuffers= { |path="/home/simdax/Freesound/snd", extensions=#["wav"]|
 var folder=PathName(path);
 
-b= Dictionary.newFrom(folder.entries.size.collect ({ |i|
 
-		folder.entries[i].fileName ->
-	Buffer.read(s, folder.entries[i].fullPath)
-		})
-	)
+	folder.entries.do ({ |i|
+		if( (extensions includesEqual: i.extension))
+		{
+			var buf=Buffer.read(s, i.fullPath);
+			~buffers.add(
+				i.fileName -> buf.bufnum
+			)
+		}
+	});
 };
 
+~lbuf={
+	~buffers.collect({ |k, v|
+		("nom : " ++ v ++" num : "++ k).postln;
+	})
+};
 
 ~playAllBuffers=
 {
-	b=~getBuffers.();
+
 
 r {
-b.size.do {|i|
-		var buf = b[i];
-	buf.query;
-	buf.play;
-		buf.duration.wait
-	}
+~buffers.size.do {|i|
+			var buf = ~buffers[i];
+			buf.query;
+			buf.play;
+			buf.duration.wait
+		}
 }.play
 };
 
@@ -40,6 +53,12 @@ SynthDef( \bufLoop, { |bufnum=0, rate=1, start=0, end=(-1), env= (Env.perc), da=
 	}
 ).add;
 
+SynthDef(\drum, {
+	arg out=0, vol, bufnum;
+	var sig=PlayBuf.ar(1, bufnum, doneAction:2);
+	Out.ar(out, sig*vol);
+}).add;
+
 SynthDef( \bufNotes, { |bufnum=0, rate=1, start=0, end=(-1), env= (Env.perc), da=2|
 	var sig;
 	sig=PlayBuf.ar(1, bufnum, BufRateScale.kr(bufnum)*rate, 1, doneAction:2);
@@ -48,7 +67,7 @@ SynthDef( \bufNotes, { |bufnum=0, rate=1, start=0, end=(-1), env= (Env.perc), da
 	}
 ).add;
 
-SynthDef( \buf, { |bufnum=0, rate=1, start=0, end=(-1), env= (Env.perc), da=2|
+/*SynthDef( \buf, { |bufnum=0, rate=1, start=0, end=(-1), env= (Env.perc), da=2|
 	var sig;
 	var phase=Line.ar(start, BufFrames.kr(bufnum)-1, doneAction:da);
 
@@ -56,7 +75,7 @@ SynthDef( \buf, { |bufnum=0, rate=1, start=0, end=(-1), env= (Env.perc), da=2|
 	// sig= sig * EnvGen.kr(env);
 	Out.ar(0, sig);
 	}
-).add;
+).add;*/
 
 
 )
