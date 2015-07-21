@@ -56,6 +56,14 @@ if(result.size > 0) {
 } {"tchiop"};
 
 )
+
+//~listFonctions
+(
+topEnvironment.getPairs.select({ |i, ind| ind.even }).collect(_.postln)
+)
+
+
+
 //ACTIVER LE MIDI
 // par defaut, il détecte "fluid synth"
 (
