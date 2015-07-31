@@ -5,6 +5,9 @@ Quarks.gui
 // INSTALL CLASSES
 /*
 ~install.("init.scd")
+~install.("Sampler.scd")
+
+File.delete
 */
 
 (
@@ -59,7 +62,7 @@ if(result.size > 0) {
 
 //~listFonctions
 (
-topEnvironment.getPairs.select({ |i, ind| ind.even }).collect(_.postln)
+topEnvironment.getPairs.select({ |i, ind| ind.even }).collect(_.postln).size
 )
 
 

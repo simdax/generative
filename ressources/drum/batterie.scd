@@ -1,4 +1,5 @@
 (
+var bus=Bus.audio.index;
 
 var elem=["kick", "hat", "snare"];
 ~getBuffers.("samples".resolveRelative);
@@ -8,9 +9,18 @@ elem=elem.collect({ |elem|
 	topEnvironment.put(elem.asSymbol, ~buffers.atAll(result).asArray);
 	"done";
 });
-elem.postln;
 
 
+
+PathName("/home/simdax/Musique").entries[3];
+a !? {a=Buffer.read(s, PathName("/home/simdax/Musique").entries[3].absolutePath)}
+;
+
+SynthDef(\god, {
+	var sig=PlayBuf.ar(1, a, BufRateScale.kr(a), startPos: 24* 1000);
+	Out.ar([0,1], sig)
+}).add
+;
 
 
 SynthDef(\drum, {
@@ -21,48 +31,44 @@ SynthDef(\drum, {
 
 
 Pdef(\basic, { arg kick, hat, snare, dur=1;
-		Pbind(
-			\instrument, \drum,
-			\bufnum, [kick, hat, snare],
-			\vol, Pseq(
-			([1,0]!8).flat +++
+	Pbind(
+		\instrument, \drum,
+		\bufnum, [kick, hat, snare],
+		\vol, Pseq(
+			([0.7,0]!8).flat +++
 			([1,1]!8).flat +++
 			([0,0, 1, 0]!4).flat
 		),
 		\dur, dur/8
-		)
+	)
 });
 
 Pdef(\basic2, { arg kick, hat, snare, dur=1;
-		Pbind(
-			\instrument, \drum,
-			\bufnum, [kick, hat, snare],
-			\vol, Pseq(
+	Pbind(
+		\instrument, \drum,
+		\bufnum, [kick, hat, snare],
+		\vol, Pseq(
 			([1,0]!8).flat +++
 			([1,1]!8).flat +++
 			([0,1, 1, 0]!4).flat
 		),
 		\dur, dur/8
-		)
+	)
 });
 
 a=Pdef(\play,
 	Pbind(
-	\type, \phrase,
-		\instrument, Prand([\basic, \basic2], inf),
-		\kick, Prand(~kick, inf),
-		\hat, Prand(~hat, inf),
-		\snare, Prand(~snare, inf),
-		\dur, Pseq((0.5, 1..5).mirror1, inf),
-	\legato, 1,
-		\out, 17
-)
-)
-)
+		\type, \phrase,
+		\instrument, \basic,
+		\kick, ~kick.choose,
+		\hat, ~hat.choose,
+		\snare, ~snare.choose,
+		\dur, 4,
+		\legato, 1,
+		\out, bus
+	)
+);
 
-// reverb
-
-(
 
 SynthDef(\reverb, {
 	arg in=0, out=0;
@@ -73,14 +79,8 @@ SynthDef(\reverb, {
 	}
 ).add;
 
+
 )
 
-// et on joue
-s.plotTree
-a.trace.play
-Synth(\reverb, [\in, 17, \out, [0,1] ])
 
-Synth(\reverb).autogui
-Synth(\drum).autogui
-Pdef(\a).gui
-Quarks.gui
+

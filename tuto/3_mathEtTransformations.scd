@@ -15,7 +15,8 @@ Pdef(\a, { | basse=(Pseq((..12))), harmo=(Pseq([2, 4], inf)) |
 	)
 })
 )
-Pdef(\a).play // tu remarques en passant qu'en ne fournissant aucune durée on a une durée d'une seconde par défaut
+Pdef(\a).play
+// tu remarques en passant qu'en ne fournissant aucune durée on a une durée d'une seconde par défaut
 //si on analyse, notre melodie est une montée ascendante de 0 à 12 (de do à la douzième de do = sol si je ne m'abuse)
 // mais en même une note sur deux est harmonisée soit par la tierce soit par la quinte, ce qui fait un zouli dessin mélodique.
 
@@ -25,12 +26,14 @@ Pdef(\a).play // tu remarques en passant qu'en ne fournissant aucune durée on a
 (
 a = PlazyEnvirN({ | basse=0, harmo=(Pseq([2, 4], inf)) |
 	Pbind(
-		\degree, Pn(basse + harmo),  // Pn est une manière plus simple de faire Pseq([UneSeuleValeur], inf)
+		\degree, Pn(basse + harmo),
+		// C'est la même chose que l'exemple précédent
 	)
 })
 )
 
 ( a <> (basse: (Pseq([3, 2, 6, 5, 2], inf)) )).trace.play
+
 // le signe <> est un opérateur de composition. On prend les valeurs à droite pour nourrir l'opérande de gauche.
 // Ici je mélange ma fonction 'a' avec un environnement, dans lequel je ne précise qu'une seule valeur, les autres étant prises par défaut.
 
@@ -46,7 +49,7 @@ Pdef(\test,
 		\basse, 0,
 		\harmo, Prand([0,1,2,3,4,5,6], inf)
 	)
-).trace.play; // attention à où tu le mets le 'trace'. Si tu le mets sur le pbind au lieu du pdef, ça risque de faire des bugs plus tard...
+).trace.play;
 )
 
 // Ce module agit exactement comme une sorte d'improvisateur un peu naz qui joue 6 notes au hasard par rapport à une basse donnée
@@ -60,13 +63,17 @@ Pbindef(\test, \basse, 3b) // en passant tu vois une notation particulière pour
 (
 Pbindef(\test,
 	\basse, Pseq ([ (0!4), (5!4), (1!4), (4!4)].flat, inf),
+
 	//la construction est remarquable. Si tu te souviens, l'opérateur '!' permet de créer un array avec la valeur répété. A la fin, pour pas me retrouver avec des arrays d'arrays, je lui dis flat et du coup j'ai cet array
 	// [ 0, 0, 0, 0, 5, 5, 5, 5, 1, 1, 1, 1, 4, 4, 4, 4 ]
+
+
 	\harmo, Prand([0,2,4], inf), // ici je lui dis de jouer que les notes de l'accord parfait
+	\degree, Pkey(\basse) + Pkey(\harmo)
 ).quant=1
 )
 
-// Pour faire sentir la basse on va rajouter une doublure avec un Pbind
+// Pour faire ressortir la basse on va rajouter une doublure avec un Pbind
 // Il faut choper une des valeurs du pattern qui nous intéresse
 // Pour ça Pcollect est bien utile
 // il fournit en argument par défaut l'événement le plus récent du pattern choisit
@@ -90,7 +97,7 @@ Pdef(\doublure,
 // Pconst tout d'abord permet de fournir des values qui vont summer ensemble jusqu'à une certaine valeur.
 // ça permet de découper des durées en parties inégales
 // => on peut le faire choisir au hasard avec des poids pour chaque partie,
-// Pwrand([0.25, 0.5, 1 ,2], [5,5,1,1].normalizeSum
+// Pwrand([0.25, 0.5, 1 ,2], [5,5,1,1].normalizeSum)
 // mais moi j'aime bien ma technique de '!' + flatten
 
 // on a aussi Pstep, qui permet de répéter une valeur fourni par un pattern aussi longtemps qu'on le veut => ici je dis que chaque accord dure une ronde
@@ -99,7 +106,6 @@ Pdef(\doublure,
 Pbindef(\test,
 	\dur, Pn (Pconst(4, Prand([0.25 !5, 0.5!5, 1, 2].flat, inf), 0.5)),
 	\basse, Pstep(Pseq([0,5,3,4]), 4, inf)
-
 ).quant=1
 )
 
