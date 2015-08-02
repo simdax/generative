@@ -1,6 +1,9 @@
-s.plotTree
-s.meter
 
+a=MP3.readToBuffer(s, "C:/Users/zob/Documents/GitHub/generative/generative/ressources/Nouveau dossier/Beach Boys - God Only Knows ( Vocals Only - Pet Sounds Sessions ).mp3")
+
+s.plotTree"C:/Users/zob/Documents/GitHub/generative/generative/ressources/Nouveau dossier/Beach_Boys_-_God_Only_Knows_Vocals_Only_-_Pet_Soun.wav"
+
+a.play
 
 (
 TempoClock.tempo=1.929;
@@ -11,27 +14,7 @@ b=Pdef(\play).play(quant:0);
 TempoClock.sched( 2 + 0.1 ,
 	{Synth(\god)}
 	);
-Synth(\reverb, [\in, 17, \out, [0,1] ], s, \addToTail)
+
 
 )
 
-play {	PlayBuf.ar(2, 92) }
-Synth(\buf)
-
-(
-SynthDef(\harp, { arg rate=1, out=0;
-	var phase=Line.ar(0, BufFrames.kr(a)-1, dur: BufDur.kr(a)*rate.reciprocal, doneAction:2);
-	var sig=BufRd.ar(1, a, phase);
-	Out.ar(out, sig);
-})
-.add)
-Synth(\harp, [rate:1, out:0])
-s.plotTree
-(
-Pbind(
-	\instrument,\harp,
-	\rate, (Pseq([
-		[10,3,6], [0,5,9], [0,4,7]
-].midiratio))
-).play
-)

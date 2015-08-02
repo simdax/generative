@@ -40,16 +40,18 @@ Pdef(\grille,
 	Plambda(
 		Ptpar([ 0,
 			Pbind(
-				\type, \midi,
+/*				\type, \midi,
 				\midiout, m,
-				\chan, 0,
+				\chan, 0,*/
 				\note, Plet(\n,
 					Pseq(basses, 6) + Pseq([ Pn(mineur9, 4), maj69, min69], inf)
 				),
 				// \detune, ~io,
 				\legato, 1,
 				\dur, 8,
-				\amp, 0.15
+				\amp, 0.15,
+				\strum, 0.15,
+				\StrumEndsTogether, true,
 			),
 			16*2,
 			Pbind(
@@ -76,8 +78,8 @@ Pdef(\grille,
 Pdef(\grille2,
 	Pbind(
 		// \instrument, \harpsichord1,
-		\type, \midi,
-		\midiout, m,
+/*		\type, \midi,
+		\midiout, m,*/
 		\amp, 0.5,
 		\degree, Pseq(basses2) + [0,2,4],
 		\root, 9,
@@ -97,3 +99,4 @@ Pdef(\grille2,
 )
 
  Pdef(\grille2).trace.play
+Pdef(\grille).trace.play
