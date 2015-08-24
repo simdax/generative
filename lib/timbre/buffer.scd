@@ -52,12 +52,12 @@ r {
 }.play
 };
 
-SynthDef( \bufLoop, { |bufnum=0, rate=1, start=0, end=(-1), env= (Env.perc), da=2|
+SynthDef( \bufLoop, { |bufnum=0, rate=1, start=0, end=1, env= (Env.perc), da=2, amp=0.5|
 	var sig;
-	var phase=Phasor.ar(0, BufRateScale.kr(bufnum)*rate, start, BufFrames.kr(bufnum)-1, BufDur.kr(bufnum), doneAction:da);
+	var phase=Phasor.ar(0, BufRateScale.kr(bufnum)*rate, start, BufFrames.kr(bufnum)-end, BufDur.kr(bufnum));
 	sig= BufRd.ar(1, bufnum, phase);
 	// sig= sig * EnvGen.kr(env);
-	Out.ar(0, sig);
+	Out.ar(0, sig*amp);
 	}
 ).add;
 
