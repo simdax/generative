@@ -1,6 +1,6 @@
 
 (
-181.32/2
+
 
 var path, root="/home/simdax/Musique/remix/vocals/";
 var w, w2, l1, l2, l3;
